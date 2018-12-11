@@ -15,8 +15,8 @@ class InstallSchema implements InstallSchemaInterface
         $installer = $setup;
         $installer->startSetup();
 
-        //START table setup
-        $table = $installer->getConnection()->newTable(
+        // Prepare a table for products
+        $productTable = $installer->getConnection()->newTable(
             $installer->getTable('timoffmax_useless_product')
         )
         ->addColumn(
@@ -27,7 +27,7 @@ class InstallSchema implements InstallSchemaInterface
             'ID'
         )
         ->addColumn(
-            'entity_id',
+            'product_id',
             Table::TYPE_INTEGER,
             null,
             ['nullable' => false, 'unsigned' => true],
@@ -48,19 +48,67 @@ class InstallSchema implements InstallSchemaInterface
             'Modification Time'
         )
         ->addIndex(
-            $setup->getIdxName('timoffmax_useless_product', ['entity_id']),
-            ['entity_id'],
+            $setup->getIdxName('timoffmax_useless_product', ['product_id']),
+            ['product_id'],
             ['type' => AdapterInterface::INDEX_TYPE_UNIQUE]
         )
         ->addForeignKey(
-            $setup->getFkName('timoffmax_useless_product', 'entity_id', 'catalog_product_entity', 'entity_id'),
-            'entity_id',
+            $setup->getFkName('timoffmax_useless_product', 'product_id', 'catalog_product_entity', 'entity_id'),
+            'product_id',
             $setup->getTable('catalog_product_entity'),
             'entity_id',
             Table::ACTION_CASCADE
         );
 
-        $installer->getConnection()->createTable($table);
+        // Prapare a table for orders
+        $orderTable = $installer->getConnection()->newTable(
+            $installer->getTable('timoffmax_useless_order')
+        )
+        ->addColumn(
+            'id',
+            Table::TYPE_INTEGER,
+            null,
+            ['identity' => true, 'nullable' => false, 'primary' => true, 'unsigned' => true],
+            'ID'
+        )
+        ->addColumn(
+            'entity_id',
+            Table::TYPE_INTEGER,
+            null,
+            ['nullable' => false, 'unsigned' => true],
+            'Order ID'
+        )
+        ->addColumn(
+            'created_at',
+            Table::TYPE_TIMESTAMP,
+            null,
+            [ 'nullable' => false, 'default' => Table::TIMESTAMP_INIT, ],
+            'Creation Time'
+        )
+        ->addColumn(
+            'updated_at',
+            Table::TYPE_TIMESTAMP,
+            null,
+            [ 'nullable' => false, 'default' => Table::TIMESTAMP_INIT_UPDATE, ],
+            'Modification Time'
+        )
+        ->addIndex(
+            $setup->getIdxName('timoffmax_useless_order', ['order_id']),
+            ['order_id'],
+            ['type' => AdapterInterface::INDEX_TYPE_UNIQUE]
+        )
+        ->addForeignKey(
+            $setup->getFkName('timoffmax_useless_order', 'order_id', 'catalog_product_entity', 'entity_id'),
+            'order_id',
+            $setup->getTable('sales_order'),
+            'entity_id',
+            Table::ACTION_CASCADE
+        );
+
+        // Create tables
+        $installer->getConnection()->createTable($productTable);
+        $installer->getConnection()->createTable($productTable);
+
         $installer->endSetup();
     }
 }
