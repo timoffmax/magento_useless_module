@@ -55,7 +55,7 @@ class InstallSchema implements InstallSchemaInterface
         ->addForeignKey(
             $setup->getFkName('timoffmax_useless_product', 'entity_id', 'catalog_product_entity', 'entity_id'),
             'entity_id',
-            $setup->getTable('sales_order'),
+            $setup->getTable('catalog_product_entity'),
             'entity_id',
             Table::ACTION_CASCADE
         );
