@@ -7,11 +7,13 @@ use Timoffmax\Useless\Model\ProductFactory;
 use Timoffmax\Useless\Model\ResourceModel\Product as ObjectResourceModel;
 use Timoffmax\Useless\Model\ResourceModel\Product\CollectionFactory;
 
+use Magento\Framework\Api\SortOrder;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Api\SearchResultsInterfaceFactory;
+
 class ProductRepository implements ProductRepositoryInterface
 {
     protected $objectFactory;
@@ -45,9 +47,11 @@ class ProductRepository implements ProductRepositoryInterface
     {
         $object = $this->objectFactory->create();
         $this->objectResourceModel->load($object, $id);
+
         if (!$object->getId()) {
             throw new NoSuchEntityException(__('Object with id "%1" does not exist.', $id));
         }
+
         return $object;        
     }       
 
@@ -71,20 +75,25 @@ class ProductRepository implements ProductRepositoryInterface
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);  
         $collection = $this->collectionFactory->create();
+
         foreach ($criteria->getFilterGroups() as $filterGroup) {
             $fields = [];
             $conditions = [];
+
             foreach ($filterGroup->getFilters() as $filter) {
                 $condition = $filter->getConditionType() ? $filter->getConditionType() : 'eq';
                 $fields[] = $filter->getField();
                 $conditions[] = [$condition => $filter->getValue()];
             }
+
             if ($fields) {
                 $collection->addFieldToFilter($fields, $conditions);
             }
-        }  
+        }
+
         $searchResults->setTotalCount($collection->getSize());
         $sortOrders = $criteria->getSortOrders();
+
         if ($sortOrders) {
             /** @var SortOrder $sortOrder */
             foreach ($sortOrders as $sortOrder) {
@@ -94,12 +103,16 @@ class ProductRepository implements ProductRepositoryInterface
                 );
             }
         }
+
         $collection->setCurPage($criteria->getCurrentPage());
         $collection->setPageSize($criteria->getPageSize());
-        $objects = [];                                     
+        $objects = [];
+
         foreach ($collection as $objectModel) {
             $objects[] = $objectModel;
         }
+
         $searchResults->setItems($objects);
+
         return $searchResults;        
     }}
