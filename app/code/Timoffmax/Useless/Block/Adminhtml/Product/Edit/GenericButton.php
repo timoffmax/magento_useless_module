@@ -1,4 +1,5 @@
 <?php
+
 namespace Timoffmax\Useless\Block\Adminhtml\Product\Edit;
 
 class GenericButton
