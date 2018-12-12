@@ -1,11 +1,15 @@
 <?php
+
 namespace Timoffmax\Useless\Controller\Adminhtml\Product;
 
 use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Exception\LocalizedException;
-            
-class Save extends \Magento\Backend\App\Action
+
+use Timoffmax\Useless\Model\ProductRepository;
+
+class Save extends Action
 {
     /**
      * Authorization level of a basic admin session
@@ -30,9 +34,9 @@ class Save extends \Magento\Backend\App\Action
      * @param \Timoffmax\Useless\Model\ProductRepository $objectRepository
      */
     public function __construct(
-        Action\Context $context,
+        Context $context,
         DataPersistorInterface $dataPersistor,
-        \Timoffmax\Useless\Model\ProductRepository $objectRepository
+        ProductRepository $objectRepository
     ) {
         $this->dataPersistor    = $dataPersistor;
         $this->objectRepository  = $objectRepository;

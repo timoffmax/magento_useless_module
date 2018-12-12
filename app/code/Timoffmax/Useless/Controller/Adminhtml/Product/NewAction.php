@@ -1,14 +1,21 @@
 <?php
+
 namespace Timoffmax\Useless\Controller\Adminhtml\Product;
 
-class NewAction extends \Magento\Backend\App\Action
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\View\Result\PageFactory;
+use Magento\Backend\App\Action;
+
+class NewAction extends Action
 {
-    const ADMIN_RESOURCE = 'Timoffmax_Useless::products';       
+    const ADMIN_RESOURCE = 'Timoffmax_Useless::products';
+
     protected $resultPageFactory;
+
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory)
-    {
+        Context $context,
+        PageFactory $resultPageFactory
+    ) {
         $this->resultPageFactory = $resultPageFactory;        
         parent::__construct($context);
     }

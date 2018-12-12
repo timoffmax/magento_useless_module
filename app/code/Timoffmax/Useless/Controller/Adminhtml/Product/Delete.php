@@ -1,7 +1,13 @@
 <?php
+
 namespace Timoffmax\Useless\Controller\Adminhtml\Product;
 
-class Delete extends \Magento\Backend\App\Action
+use Timoffmax\Useless\Model\ProductRepository;
+
+use Magento\Backend\App\Action\Context;
+use Magento\Backend\App\Action;
+
+class Delete extends Action
 {  
     const ADMIN_RESOURCE = 'Timoffmax_Useless::products';
     
@@ -16,8 +22,8 @@ class Delete extends \Magento\Backend\App\Action
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
-        \Timoffmax\Useless\Model\ProductRepository $objectRepository,
-        \Magento\Backend\App\Action\Context $context
+        ProductRepository $objectRepository,
+        Context $context
     ) {
         $this->objectRepository = $objectRepository;
 
@@ -49,7 +55,5 @@ class Delete extends \Magento\Backend\App\Action
         $this->messageManager->addError(__('We can not find an object to delete.'));
         // go to grid
         return $resultRedirect->setPath('*/*/');
-        
-    }    
-    
+    }
 }
