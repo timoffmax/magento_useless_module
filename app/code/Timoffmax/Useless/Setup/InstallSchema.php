@@ -72,7 +72,7 @@ class InstallSchema implements InstallSchemaInterface
             'ID'
         )
         ->addColumn(
-            'entity_id',
+            'order_id',
             Table::TYPE_INTEGER,
             null,
             ['nullable' => false, 'unsigned' => true],
@@ -107,7 +107,7 @@ class InstallSchema implements InstallSchemaInterface
 
         // Create tables
         $installer->getConnection()->createTable($productTable);
-        $installer->getConnection()->createTable($productTable);
+        $installer->getConnection()->createTable($orderTable);
 
         $installer->endSetup();
     }
