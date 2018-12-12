@@ -25,7 +25,7 @@
                 <item name="config" xsi:type="array">
                     <item name="update_url" xsi:type="url" path="mui/index/render"/>
                     <item name="storageConfig" xsi:type="array">
-                        <item name="indexField" xsi:type="string">product_id</item>
+                        <item name="indexField" xsi:type="string">id</item>
                     </item>
                 </item>
             </argument>
@@ -49,19 +49,19 @@
                 <item name="config" xsi:type="array">
                     <item name="resizeEnabled" xsi:type="boolean">false</item>
                     <item name="resizeDefaultWidth" xsi:type="string">55</item>
-                    <item name="indexField" xsi:type="string">product_id</item>
+                    <item name="indexField" xsi:type="string">id</item>
                     <item name="sortOrder" xsi:type="number">10</item>
                 </item>
             </argument>
         </selectionsColumn>
-        <column name="product_id">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">textRange</item>
-                    <item name="sorting" xsi:type="string">asc</item>
-                    <item name="label" xsi:type="string" translate="true">ID</item>
-                </item>
-            </argument>
+        <column name="product_id" class="Timoffmax\Useless\Ui\Component\Listing\Column\Timoffmaxuselessproducts\ProductLink"
+                component="Magento_Ui/js/grid/columns/column"
+        >
+            <settings>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <filter>textRange</filter>
+                <label translate="true">Product ID</label>
+            </settings>
         </column>
         <actionsColumn name="actions" class="Timoffmax\Useless\Ui\Component\Listing\Column\Timoffmaxuselessproducts\PageActions">
             <argument name="data" xsi:type="array">
@@ -73,13 +73,5 @@
                 </item>
             </argument>
         </actionsColumn>
-        <column name="title">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="label" xsi:type="string">Title</item>
-                    <item name="sortOrder" xsi:type="number">105</item>
-                </item>
-            </argument>
-        </column>
     </columns>
 </listing>

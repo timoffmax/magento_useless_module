@@ -55,18 +55,17 @@ class Save extends Action
         $data = $this->getRequest()->getPostValue();
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
+
         if ($data) {
-            if (isset($data['is_active']) && $data['is_active'] === 'true') {
-                $data['is_active'] = Timoffmax\Useless\Model\Product::STATUS_ENABLED;
-            }
-            if (empty($data['product_id'])) {
-                $data['product_id'] = null;
+            if (empty($data['id'])) {
+                $data['id'] = null;
             }
 
             /** @var \Timoffmax\Useless\Model\Product $model */
             $model = $this->_objectManager->create('Timoffmax\Useless\Model\Product');
 
-            $id = $this->getRequest()->getParam('product_id');
+            $id = $this->getRequest()->getParam('id');
+
             if ($id) {
                 $model = $this->objectRepository->getById($id);
             }
@@ -75,21 +74,25 @@ class Save extends Action
 
             try {
                 $this->objectRepository->save($model);
-                $this->messageManager->addSuccess(__('You saved the thing.'));
+                $this->messageManager->addSuccessMessage(__('You saved the thing.'));
                 $this->dataPersistor->clear('timoffmax_useless_product');
+
                 if ($this->getRequest()->getParam('back')) {
-                    return $resultRedirect->setPath('*/*/edit', ['product_id' => $model->getId(), '_current' => true]);
+                    return $resultRedirect->setPath('*/*/edit', ['id' => $model->getId(), '_current' => true]);
                 }
+
                 return $resultRedirect->setPath('*/*/');
             } catch (LocalizedException $e) {
-                $this->messageManager->addError($e->getMessage());
+                $this->messageManager->addErrorMessage($e->getMessage());
             } catch (\Exception $e) {
-                $this->messageManager->addException($e, __('Something went wrong while saving the data.'));
+                $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the data.'));
             }
 
             $this->dataPersistor->set('timoffmax_useless_product', $data);
-            return $resultRedirect->setPath('*/*/edit', ['product_id' => $this->getRequest()->getParam('product_id')]);
+
+            return $resultRedirect->setPath('*/*/edit', ['id' => $this->getRequest()->getParam('id')]);
         }
+
         return $resultRedirect->setPath('*/*/');
     }    
 }

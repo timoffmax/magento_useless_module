@@ -5,7 +5,7 @@
             <item name="provider" xsi:type="string">timoffmax_useless_products_form.timoffmax_useless_products_form_data_source</item>
             <item name="deps" xsi:type="string">timoffmax_useless_products_form.timoffmax_useless_products_form_data_source</item>
         </item>
-        <item name="label" xsi:type="string" translate="true">Object Information</item>
+        <item name="label" xsi:type="string" translate="true">Product Information</item>
         <item name="config" xsi:type="array">
             <item name="dataScope" xsi:type="string">data</item>
             <item name="namespace" xsi:type="string">timoffmax_useless_products_form</item>
@@ -23,8 +23,8 @@
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">Timoffmax\Useless\Model\Product\DataProvider</argument>
             <argument name="name" xsi:type="string">timoffmax_useless_products_form_data_source</argument>
-            <argument name="primaryFieldName" xsi:type="string">product_id</argument>
-            <argument name="requestFieldName" xsi:type="string">product_id</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="submit_url" xsi:type="url" path="*/*/save"/>
@@ -48,24 +48,10 @@
         <field name="product_id">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="visible" xsi:type="boolean">true</item>
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="formElement" xsi:type="string">input</item>
                     <item name="dataScope" xsi:type="string">product_id</item>
-                </item>
-            </argument>
-        </field>
-        <field name="title">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="dataType" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">Title</item>
-                    <item name="formElement" xsi:type="string">input</item>
-                    <item name="sortOrder" xsi:type="number">20</item>
-                    <item name="dataScope" xsi:type="string">title</item>
-                    <item name="validation" xsi:type="array">
-                        <item name="required-entry" xsi:type="boolean">true</item>
-                    </item>
                 </item>
             </argument>
         </field>
