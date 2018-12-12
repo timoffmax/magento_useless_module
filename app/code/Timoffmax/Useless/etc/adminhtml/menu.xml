@@ -1,5 +1,28 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-    <add id="Timoffmax_Useless::products" resource="Timoffmax_Useless::products" title="Useless products" action="timoffmax_useless_products/index/index" module="Timoffmax_Useless" sortOrder="10"/><add id="Timoffmax_Useless::products_list" resource="Timoffmax_Useless::products" title="Product Objects" action="timoffmax_useless_products/index/index" module="Timoffmax_Useless" sortOrder="10" parent="Timoffmax_Useless::products" dependsOnModule="Timoffmax_Useless"/></menu>
+        <add id="Timoffmax_Useless::products"
+             resource="Timoffmax_Useless::products"
+             title="Useless products"
+             action="timoffmax_useless_products/index/index"
+             module="Timoffmax_Useless"
+             sortOrder="1000"/>
+
+        <add id="Timoffmax_Useless::products_list"
+             resource="Timoffmax_Useless::products"
+             title="Products"
+             action="timoffmax_useless_products/product/index"
+             module="Timoffmax_Useless"
+             sortOrder="10"
+             parent="Timoffmax_Useless::products"
+             dependsOnModule="Timoffmax_Useless"/>
+        <add id="Timoffmax_Useless::orders_list"
+             resource="Timoffmax_Useless::products"
+             title="Orders"
+             action="timoffmax_useless_products/order/index"
+             module="Timoffmax_Useless"
+             sortOrder="20"
+             parent="Timoffmax_Useless::products"
+             dependsOnModule="Timoffmax_Useless"/>
+    </menu>
 </config>
