@@ -1,9 +1,9 @@
 <?php
+
 namespace Timoffmax\Useless\Model;
 
 use Timoffmax\Useless\Api\ProductRepositoryInterface;
 use Timoffmax\Useless\Api\Data\ProductInterface;
-use Timoffmax\Useless\Model\ProductFactory;
 use Timoffmax\Useless\Model\ResourceModel\Product as ObjectResourceModel;
 use Timoffmax\Useless\Model\ResourceModel\Product\CollectionFactory;
 
@@ -115,4 +115,5 @@ class ProductRepository implements ProductRepositoryInterface
         $searchResults->setItems($objects);
 
         return $searchResults;        
-    }}
+    }
+}

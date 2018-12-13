@@ -1,8 +1,12 @@
 <?php
+
 namespace Timoffmax\Useless\Model\Product;
+
 use Timoffmax\Useless\Model\ResourceModel\Product\CollectionFactory;
 use Magento\Framework\App\Request\DataPersistorInterface;
-class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
+use Magento\Ui\DataProvider\AbstractDataProvider;
+
+class DataProvider extends AbstractDataProvider
 {
 
     protected $collection;
@@ -37,7 +41,9 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
     ) {
         $this->collection = $collectionFactory->create();
         $this->dataPersistor = $dataPersistor;
+
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
+
         $this->meta = $this->prepareMeta($this->meta);
     }
 
@@ -62,6 +68,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         if (isset($this->loadedData)) {
             return $this->loadedData;
         }
+
         $items = $this->collection->getItems();
 
         foreach ($items as $item) {
@@ -69,6 +76,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         }
 
         $data = $this->dataPersistor->get('timoffmax_useless_product');
+
         if (!empty($data)) {
             $item = $this->collection->getNewEmptyItem();
             $item->setData($data);

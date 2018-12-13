@@ -34,21 +34,23 @@ class Delete extends Action
     {
         // check if we know what should be deleted
         $id = $this->getRequest()->getParam('object_id');
+
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
+
         if ($id) {
             try {
                 // delete model
                 $this->objectRepository->deleteById($id);
                 // display success message
-                $this->messageManager->addSuccess(__('You have deleted the object.'));
+                $this->messageManager->addSuccess(__('You have deleted the product.'));
                 // go to grid
                 return $resultRedirect->setPath('*/*/');
             } catch (\Exception $e) {
                 // display error message
                 $this->messageManager->addError($e->getMessage());
                 // go back to edit form
-                return $resultRedirect->setPath('*/*/edit', ['product_id' => $id]);
+                return $resultRedirect->setPath('*/*/edit', ['id' => $id]);
             }
         }
         // display error message

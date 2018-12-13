@@ -1,6 +1,10 @@
 <?php
+
 namespace Timoffmax\Useless\Model\ResourceModel;
-class Product extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+
+use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
+
+class Product extends AbstractDb
 {
     protected function _construct()
     {

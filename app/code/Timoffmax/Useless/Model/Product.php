@@ -10,6 +10,8 @@ class Product extends AbstractModel implements ProductInterface, IdentityInterfa
 {
     const CACHE_TAG = 'timoffmax_useless_product';
 
+    protected $_idFieldName = 'id';
+
     protected function _construct()
     {
         $this->_init('Timoffmax\Useless\Model\ResourceModel\Product');

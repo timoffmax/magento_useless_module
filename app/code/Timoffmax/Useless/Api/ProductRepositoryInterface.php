@@ -1,4 +1,5 @@
 <?php
+
 namespace Timoffmax\Useless\Api;
 
 use Timoffmax\Useless\Api\Data\ProductInterface;
