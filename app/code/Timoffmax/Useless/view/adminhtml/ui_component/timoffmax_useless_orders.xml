@@ -2,24 +2,24 @@
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">timoffmax_useless_products.timoffmax_useless_products_data_source</item>
-            <item name="deps" xsi:type="string">timoffmax_useless_products.timoffmax_useless_products_data_source</item>
+            <item name="provider" xsi:type="string">timoffmax_useless_orders.timoffmax_useless_orders_data_source</item>
+            <item name="deps" xsi:type="string">timoffmax_useless_orders.timoffmax_useless_orders_data_source</item>
         </item>
-        <item name="spinner" xsi:type="string">timoffmax_useless_products_columns</item>
+        <item name="spinner" xsi:type="string">timoffmax_useless_orders_columns</item>
         <item name="buttons" xsi:type="array">
             <item name="add" xsi:type="array">
                 <item name="name" xsi:type="string">add</item>
                 <item name="label" xsi:type="string">Add New</item>
                 <item name="class" xsi:type="string">primary</item>
-                <item name="url" xsi:type="string">*/Product/new</item>
+                <item name="url" xsi:type="string">*/Order/new</item>
             </item>
         </item>
     </argument>
-    <dataSource name="timoffmax_useless_products_data_source">
+    <dataSource name="timoffmax_useless_orders_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">Timoffmax\Useless\Ui\Component\Listing\DataProviders\Timoffmax\Useless\Products</argument>
-            <argument name="name" xsi:type="string">timoffmax_useless_products_data_source</argument>
-            <argument name="primaryFieldName" xsi:type="string">product_id</argument>
+            <argument name="class" xsi:type="string">Timoffmax\Useless\Ui\Component\Listing\DataProviders\Timoffmax\Useless\Orders</argument>
+            <argument name="name" xsi:type="string">timoffmax_useless_orders_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">order_id</argument>
             <argument name="requestFieldName" xsi:type="string">id</argument>
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -49,7 +49,7 @@
                         <message translate="true">Delete selected items?</message>
                         <title translate="true">Delete items</title>
                     </confirm>
-                    <url path="timoffmax_useless_products/product/massDelete"/>
+                    <url path="timoffmax_useless_products/order/massDelete"/>
                     <type>delete</type>
                     <label translate="true">Delete</label>
                 </settings>
@@ -58,7 +58,7 @@
         <paging name="listing_paging"/>
         <filters name="listing_filters"/>
     </listingToolbar>
-    <columns name="timoffmax_useless_products_columns">
+    <columns name="timoffmax_useless_orders_columns">
         <selectionsColumn name="ids">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -78,21 +78,21 @@
                 </item>
             </argument>
         </column>
-        <column name="product_id" class="Timoffmax\Useless\Ui\Component\Listing\Column\Timoffmaxuselessproducts\OrderLink"
+        <column name="order_id" class="Timoffmax\Useless\Ui\Component\Listing\Column\Timoffmaxuselessorders\OrderLink"
                 component="Magento_Ui/js/grid/columns/column"
         >
             <settings>
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
                 <filter>textRange</filter>
-                <label translate="true">Product ID</label>
+                <label translate="true">Order ID</label>
             </settings>
         </column>
-        <actionsColumn name="actions" class="Timoffmax\Useless\Ui\Component\Listing\Column\Timoffmaxuselessproducts\PageActions">
+        <actionsColumn name="actions" class="Timoffmax\Useless\Ui\Component\Listing\Column\Timoffmaxuselessorders\PageActions">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="resizeEnabled" xsi:type="boolean">false</item>
                     <item name="resizeDefaultWidth" xsi:type="string">107</item>
-                    <item name="indexField" xsi:type="string">product_id</item>
+                    <item name="indexField" xsi:type="string">order_id</item>
                     <item name="sortOrder" xsi:type="number">200</item>
                 </item>
             </argument>

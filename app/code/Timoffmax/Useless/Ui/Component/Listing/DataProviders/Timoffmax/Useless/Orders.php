@@ -2,9 +2,9 @@
 
 namespace Timoffmax\Useless\Ui\Component\Listing\DataProviders\Timoffmax\Useless;
 
-use \Timoffmax\Useless\Model\ResourceModel\Product\CollectionFactory;
+use \Timoffmax\Useless\Model\ResourceModel\Order\CollectionFactory;
 
-class Products extends \Magento\Ui\DataProvider\AbstractDataProvider
+class Orders extends \Magento\Ui\DataProvider\AbstractDataProvider
 {    
     public function __construct(
         $name,
