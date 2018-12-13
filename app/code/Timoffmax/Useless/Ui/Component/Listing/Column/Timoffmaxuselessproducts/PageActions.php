@@ -11,13 +11,13 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
                 $name = $this->getData("name");
                 $id = "X";
 
-                if (isset($item["product_id"])) {
-                    $id = $item["product_id"];
+                if (isset($item["id"])) {
+                    $id = $item["id"];
                 }
 
                 $item[$name]["view"] = [
                     "href" => $this->getContext()->getUrl(
-                        "timoffmax_useless_products/product/edit", ["product_id" => $id]),
+                        "timoffmax_useless_products/product/edit", ["id" => $id]),
                     "label"=>__("Edit")
                 ];
             }
