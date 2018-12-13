@@ -40,15 +40,13 @@
     <fieldset name="general">
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
-                <item name="label" xsi:type="string">Form Data</item>
-                <item name="collapsible" xsi:type="boolean">true</item>
-                <item name="opened" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string">Product</item>
             </item>
         </argument>
         <field name="product_id">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="label" xsi:type="string" translate="true">Product ID</item>
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="formElement" xsi:type="string">input</item>
                     <item name="dataScope" xsi:type="string">product_id</item>
