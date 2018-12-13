@@ -23,7 +23,7 @@ class ProductLink extends \Magento\Ui\Component\Listing\Columns\Column
 
                 $productId = $item["product_id"] ?? "X";
 
-                $url = $this->urlBuilder->getUrl('catalog/product/edit', ['product_id' => $productId]);
+                $url = $this->urlBuilder->getUrl('catalog/product/edit', ['id' => $productId]);
                 $html = html_entity_decode("<a href=\"$url\">{$productId}</a>");
 
                 $item[$name] = $html;
