@@ -78,7 +78,7 @@
                 </item>
             </argument>
         </column>
-        <column name="product_id" class="Timoffmax\Useless\Ui\Component\Listing\Column\Timoffmaxuselessproducts\OrderLink"
+        <column name="product_id" class="Timoffmax\Useless\Ui\Component\Listing\Column\Timoffmaxuselessproducts\ProductLink"
                 component="Magento_Ui/js/grid/columns/column"
         >
             <settings>
