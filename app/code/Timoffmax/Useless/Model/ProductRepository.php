@@ -13,6 +13,7 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Api\SearchResultsInterfaceFactory;
+use Magento\Framework\Api\SearchResultsInterface;
 
 class ProductRepository implements ProductRepositoryInterface
 {
@@ -38,7 +39,7 @@ class ProductRepository implements ProductRepositoryInterface
      * @return ProductInterface
      * @throws CouldNotSaveException
      */
-    public function save(ProductInterface $object)
+    public function save(ProductInterface $object): bool
     {
         try {
             $this->objectResourceModel->save($object);
@@ -53,7 +54,7 @@ class ProductRepository implements ProductRepositoryInterface
      * @return Product
      * @throws NoSuchEntityException
      */
-    public function getById($id)
+    public function getById($id): ProductInterface
     {
         $object = $this->objectFactory->create();
         $this->objectResourceModel->load($object, $id);
@@ -70,7 +71,7 @@ class ProductRepository implements ProductRepositoryInterface
      * @return bool
      * @throws CouldNotDeleteException
      */
-    public function delete(ProductInterface $object)
+    public function delete(ProductInterface $object): bool
     {
         try {
             $this->objectResourceModel->delete($object);
@@ -86,7 +87,7 @@ class ProductRepository implements ProductRepositoryInterface
      * @throws CouldNotDeleteException
      * @throws NoSuchEntityException
      */
-    public function deleteById($id)
+    public function deleteById($id): bool
     {
         return $this->delete($this->getById($id));
     }
@@ -95,7 +96,7 @@ class ProductRepository implements ProductRepositoryInterface
      * @param SearchCriteriaInterface $criteria
      * @return \Magento\Framework\Api\SearchResultsInterface
      */
-    public function getList(SearchCriteriaInterface $criteria)
+    public function getList(SearchCriteriaInterface $criteria): SearchResultsInterface
     {
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);  

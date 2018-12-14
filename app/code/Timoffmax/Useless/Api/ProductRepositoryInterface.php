@@ -2,18 +2,40 @@
 
 namespace Timoffmax\Useless\Api;
 
-use Timoffmax\Useless\Api\Data\ProductInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 
-interface ProductRepositoryInterface 
+use Magento\Framework\Api\SearchResultsInterface;
+use Timoffmax\Useless\Api\Data\ProductInterface;
+
+interface ProductRepositoryInterface
 {
-    public function save(ProductInterface $page);
+    /**
+     * @param ProductInterface $page
+     * @return bool
+     */
+    public function save(ProductInterface $page): bool;
 
-    public function getById($id);
+    /**
+     * @param $id
+     * @return ProductInterface
+     */
+    public function getById($id): ProductInterface;
 
-    public function getList(SearchCriteriaInterface $criteria);
+    /**
+     * @param SearchCriteriaInterface $criteria
+     * @return SearchResultsInterface
+     */
+    public function getList(SearchCriteriaInterface $criteria): SearchResultsInterface;
 
-    public function delete(ProductInterface $page);
+    /**
+     * @param ProductInterface $page
+     * @return bool
+     */
+    public function delete(ProductInterface $page): bool;
 
-    public function deleteById($id);
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function deleteById($id): bool;
 }
