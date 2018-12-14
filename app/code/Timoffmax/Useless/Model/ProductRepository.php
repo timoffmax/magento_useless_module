@@ -32,7 +32,12 @@ class ProductRepository implements ProductRepositoryInterface
         $this->collectionFactory    = $collectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
     }
-    
+
+    /**
+     * @param ProductInterface $object
+     * @return ProductInterface
+     * @throws CouldNotSaveException
+     */
     public function save(ProductInterface $object)
     {
         try {
@@ -43,6 +48,11 @@ class ProductRepository implements ProductRepositoryInterface
         return $object;
     }
 
+    /**
+     * @param $id
+     * @return Product
+     * @throws NoSuchEntityException
+     */
     public function getById($id)
     {
         $object = $this->objectFactory->create();
@@ -53,8 +63,13 @@ class ProductRepository implements ProductRepositoryInterface
         }
 
         return $object;        
-    }       
+    }
 
+    /**
+     * @param ProductInterface $object
+     * @return bool
+     * @throws CouldNotDeleteException
+     */
     public function delete(ProductInterface $object)
     {
         try {
@@ -63,13 +78,23 @@ class ProductRepository implements ProductRepositoryInterface
             throw new CouldNotDeleteException(__($exception->getMessage()));
         }
         return true;    
-    }    
+    }
 
+    /**
+     * @param $id
+     * @return bool
+     * @throws CouldNotDeleteException
+     * @throws NoSuchEntityException
+     */
     public function deleteById($id)
     {
         return $this->delete($this->getById($id));
-    }    
+    }
 
+    /**
+     * @param SearchCriteriaInterface $criteria
+     * @return \Magento\Framework\Api\SearchResultsInterface
+     */
     public function getList(SearchCriteriaInterface $criteria)
     {
         $searchResults = $this->searchResultsFactory->create();
