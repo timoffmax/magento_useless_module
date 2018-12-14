@@ -9,7 +9,7 @@
              sortOrder="1000"/>
 
         <add id="Timoffmax_Useless::products_list"
-             resource="Timoffmax_Useless::products"
+             resource="Timoffmax_Useless::products_list"
              title="Products"
              action="timoffmax_useless_products/product/index"
              module="Timoffmax_Useless"
@@ -17,7 +17,7 @@
              parent="Timoffmax_Useless::products"
              dependsOnModule="Timoffmax_Useless"/>
         <add id="Timoffmax_Useless::orders_list"
-             resource="Timoffmax_Useless::products"
+             resource="Timoffmax_Useless::orders_list"
              title="Orders"
              action="timoffmax_useless_products/order/index"
              module="Timoffmax_Useless"
