@@ -39,7 +39,7 @@ class ProductRepository implements ProductRepositoryInterface
      * @return ProductInterface
      * @throws CouldNotSaveException
      */
-    public function save(ProductInterface $object): bool
+    public function save(ProductInterface $object): ProductInterface
     {
         try {
             $this->objectResourceModel->save($object);
@@ -71,7 +71,7 @@ class ProductRepository implements ProductRepositoryInterface
      * @return bool
      * @throws CouldNotDeleteException
      */
-    public function delete(ProductInterface $object): bool
+    public function delete(ProductInterface $object): ProductInterface
     {
         try {
             $this->objectResourceModel->delete($object);

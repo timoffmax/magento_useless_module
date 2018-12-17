@@ -87,6 +87,12 @@
                 <label translate="true">Product ID</label>
             </settings>
         </column>
+        <column name="price" class="Magento\Ui\Component\Listing\Columns\Column" component="Magento_Ui/js/grid/columns/column">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Price</label>
+            </settings>
+        </column>
         <actionsColumn name="actions" class="Timoffmax\Useless\Ui\Component\Listing\Column\Timoffmaxuselessproducts\PageActions">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">

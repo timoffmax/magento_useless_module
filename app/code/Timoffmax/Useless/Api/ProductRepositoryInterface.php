@@ -11,9 +11,9 @@ interface ProductRepositoryInterface
 {
     /**
      * @param ProductInterface $page
-     * @return bool
+     * @return ProductInterface
      */
-    public function save(ProductInterface $page): bool;
+    public function save(ProductInterface $page): ProductInterface;
 
     /**
      * @param $id
@@ -29,9 +29,9 @@ interface ProductRepositoryInterface
 
     /**
      * @param ProductInterface $page
-     * @return bool
+     * @return ProductInterface
      */
-    public function delete(ProductInterface $page): bool;
+    public function delete(ProductInterface $page): ProductInterface;
 
     /**
      * @param $id
