@@ -35,6 +35,7 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
+<<<<<<< HEAD
      * @param ProductInterface $product
      * @return ProductInterface
      * @throws CouldNotSaveException
@@ -46,6 +47,7 @@ class ProductRepository implements ProductRepositoryInterface
         } catch(\Exception $e) {
             throw new CouldNotSaveException(__($e->getMessage()));
         }
+
         return $product;
     }
 
@@ -110,16 +112,16 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
-     * @param SearchCriteriaInterface $criteria
+     * @param SearchCriteriaInterface $searchCriteria
      * @return \Magento\Framework\Api\SearchResultsInterface
      */
-    public function getList(SearchCriteriaInterface $criteria): SearchResultsInterface
+    public function getList(SearchCriteriaInterface $searchCriteria): SearchResultsInterface
     {
         $searchResults = $this->searchResultsFactory->create();
-        $searchResults->setSearchCriteria($criteria);  
+        $searchResults->setSearchCriteria($searchCriteria);
         $collection = $this->collectionFactory->create();
 
-        foreach ($criteria->getFilterGroups() as $filterGroup) {
+        foreach ($searchCriteria->getFilterGroups() as $filterGroup) {
             $fields = [];
             $conditions = [];
 
@@ -135,7 +137,7 @@ class ProductRepository implements ProductRepositoryInterface
         }
 
         $searchResults->setTotalCount($collection->getSize());
-        $sortOrders = $criteria->getSortOrders();
+        $sortOrders = $searchCriteria->getSortOrders();
 
         if ($sortOrders) {
             /** @var SortOrder $sortOrder */
@@ -147,15 +149,15 @@ class ProductRepository implements ProductRepositoryInterface
             }
         }
 
-        $collection->setCurPage($criteria->getCurrentPage());
-        $collection->setPageSize($criteria->getPageSize());
-        $objects = [];
+        $collection->setCurPage($searchCriteria->getCurrentPage());
+        $collection->setPageSize($searchCriteria->getPageSize());
+        $products = [];
 
-        foreach ($collection as $objectModel) {
-            $objects[] = $objectModel;
+        foreach ($collection as $product) {
+            $products[] = $product;
         }
 
-        $searchResults->setItems($objects);
+        $searchResults->setItems($products);
 
         return $searchResults;        
     }

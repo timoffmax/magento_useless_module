@@ -2,6 +2,11 @@
 
 namespace Timoffmax\Useless\Api\Data;
 
+/**
+ * Interface ProductInterface
+ *
+ * @api
+ */
 interface ProductInterface
 {
     public const PRODUCT_ID = 'product_id';

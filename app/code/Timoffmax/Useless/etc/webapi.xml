@@ -6,4 +6,10 @@
             <resource ref="Timoffmax_Useless::products"/>
         </resources>
     </route>
+    <route url="/V1/timoffmax_useless/product/:id" method="GET" >
+        <service class="Timoffmax\Useless\Api\ProductRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="Timoffmax_Useless::products"/>
+        </resources>
+    </route>
 </routes>

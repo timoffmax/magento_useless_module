@@ -1,12 +1,19 @@
-fix-permissions:
+fix-permissions-debian:
 	find var vendor generated pub/static pub/media app/etc -type f -exec chmod g+w {} +
 	find var vendor generated pub/static pub/media app/etc -type d -exec chmod g+ws {} +
 	chown -R :www-data .
 	chmod u+x bin/magento
 
+fix-permissions-arch:
+	find var vendor generated pub/static pub/media app/etc -type f -exec chmod g+w {} +
+	find var vendor generated pub/static pub/media app/etc -type d -exec chmod g+ws {} +
+	chown -R :http .
+	chmod u+x bin/magento
+	chmod -R 777 var/ generated/
+
 cache_flush:
-	php7.2 bin/magento cache:flush
-	rm -rf var/log/* var/report/* var/view_preprocessed/* generated/*
+	php bin/magento cache:flush
+	rm -rf var/log/* var/report/* var/view_preprocessed/* generated/* pub/static/*
 
 ### Debug
 debug_magento: cache_flush
@@ -21,7 +28,7 @@ get_last_report:
 
 ### System
 upgrade:
-	php7.2 bin/magento setup:upgrade
+	php bin/magento setup:upgrade
 
 run_nginx:
 	sudo systemctl stop apache2.service && sudo systemctl start nginx.service

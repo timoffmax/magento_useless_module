@@ -3,10 +3,15 @@
 namespace Timoffmax\Useless\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
-
 use Magento\Framework\Api\SearchResultsInterface;
+
 use Timoffmax\Useless\Api\Data\ProductInterface;
 
+/**
+ * Interface ProductRepositoryInterface
+ *
+ * @api
+ */
 interface ProductRepositoryInterface
 {
     /**
@@ -28,10 +33,10 @@ interface ProductRepositoryInterface
     public function getByProductId(int $productId): ?ProductInterface;
 
     /**
-     * @param SearchCriteriaInterface $criteria
-     * @return SearchResultsInterface
+     * @param SearchCriteriaInterface $searchCriteria
+     * @return \Magento\Framework\Api\SearchResultsInterface
      */
-    public function getList(SearchCriteriaInterface $criteria): SearchResultsInterface;
+    public function getList(SearchCriteriaInterface $searchCriteria): SearchResultsInterface;
 
     /**
      * @param ProductInterface $page
