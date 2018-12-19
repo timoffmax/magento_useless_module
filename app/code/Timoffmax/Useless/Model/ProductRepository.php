@@ -35,7 +35,6 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
-<<<<<<< HEAD
      * @param ProductInterface $product
      * @return ProductInterface
      * @throws CouldNotSaveException
