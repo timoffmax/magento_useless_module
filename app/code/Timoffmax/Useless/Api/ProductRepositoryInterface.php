@@ -11,15 +11,21 @@ interface ProductRepositoryInterface
 {
     /**
      * @param ProductInterface $page
-     * @return bool
-     */
-    public function save(ProductInterface $page): bool;
-
-    /**
-     * @param $id
      * @return ProductInterface
      */
-    public function getById($id): ProductInterface;
+    public function save(ProductInterface $product): ProductInterface;
+
+    /**
+     * @param int $id
+     * @return ProductInterface
+     */
+    public function getById(int $id): ?ProductInterface;
+
+    /**
+     * @param int $productId
+     * @return ProductInterface
+     */
+    public function getByProductId(int $productId): ?ProductInterface;
 
     /**
      * @param SearchCriteriaInterface $criteria
@@ -31,11 +37,11 @@ interface ProductRepositoryInterface
      * @param ProductInterface $page
      * @return bool
      */
-    public function delete(ProductInterface $page): bool;
+    public function delete(ProductInterface $product): bool;
 
     /**
-     * @param $id
+     * @param int $id
      * @return bool
      */
-    public function deleteById($id): bool;
+    public function deleteById(int $id): bool;
 }

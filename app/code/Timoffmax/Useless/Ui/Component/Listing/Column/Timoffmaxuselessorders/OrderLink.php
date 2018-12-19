@@ -24,7 +24,7 @@ class OrderLink extends \Magento\Ui\Component\Listing\Columns\Column
 
                 $orderId = $item["order_id"] ?? "X";
 
-                $url = $this->urlBuilder->getUrl('catalog/order/edit', ['id' => $orderId]);
+                $url = $this->urlBuilder->getUrl('sales/order/view', ['order_id' => $orderId]);
                 $html = html_entity_decode("<a href=\"$url\">{$orderId}</a>");
 
                 $item[$name] = $html;
