@@ -4,7 +4,7 @@ namespace Timoffmax\Useless\Model;
 
 use Timoffmax\Useless\Api\OrderRepositoryInterface;
 use Timoffmax\Useless\Api\Data\OrderInterface;
-use Timoffmax\Useless\Model\ResourceModel\Order as ObjectResourceModel;
+use Timoffmax\Useless\Model\ResourceModel\Order as OrderResourceModel;
 use Timoffmax\Useless\Model\ResourceModel\Order\CollectionFactory;
 
 use Magento\Framework\Api\SortOrder;
@@ -12,31 +12,37 @@ use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Api\SearchResultsInterface;
 use Magento\Framework\Api\SearchResultsInterfaceFactory;
 
 class OrderRepository implements OrderRepositoryInterface
 {
-    protected $objectFactory;
-    protected $objectResourceModel;
+    protected $orderFactory;
+    protected $orderResourceModel;
     protected $collectionFactory;
     protected $searchResultsFactory;
     
     public function __construct(
-        OrderFactory $objectFactory,
-        ObjectResourceModel $objectResourceModel,
+        OrderFactory $orderFactory,
+        OrderResourceModel $orderResourceModel,
         CollectionFactory $collectionFactory,
         SearchResultsInterfaceFactory $searchResultsFactory       
     ) {
-        $this->objectFactory        = $objectFactory;
-        $this->objectResourceModel  = $objectResourceModel;
-        $this->collectionFactory    = $collectionFactory;
+        $this->orderFactory = $orderFactory;
+        $this->orderResourceModel = $orderResourceModel;
+        $this->collectionFactory = $collectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
     }
-    
-    public function save(OrderInterface $object)
+
+    /**
+     * @param OrderInterface $object
+     * @return OrderInterface
+     * @throws CouldNotSaveException
+     */
+    public function save(OrderInterface $object): OrderInterface
     {
         try {
-            $this->objectResourceModel->save($object);
+            $this->orderResourceModel->save($object);
         } catch(\Exception $e) {
             throw new CouldNotSaveException(__($e->getMessage()));
         }
@@ -44,35 +50,71 @@ class OrderRepository implements OrderRepositoryInterface
         return $object;
     }
 
-    public function getById($id)
+    /**
+     * @param int $id
+     * @return OrderInterface
+     * @throws NoSuchEntityException
+     */
+    public function getById(int $id): OrderInterface
     {
-        $object = $this->objectFactory->create();
-        $this->objectResourceModel->load($object, $id);
+        $object = $this->orderFactory->create();
+        $this->orderResourceModel->load($object, $id);
 
         if (!$object->getId()) {
             throw new NoSuchEntityException(__('Order with id "%1" does not exist.', $id));
         }
 
         return $object;        
-    }       
+    }
 
-    public function delete(OrderInterface $object)
+    /**
+     * @param int $orderId
+     * @return OrderInterface
+     */
+    public function getByOrderId(int $orderId): ?OrderInterface
+    {
+        $order = $this->orderFactory->create();
+        $this->orderResourceModel->load($order, $orderId, Order::ORDER_ID);
+
+        if (!$order->getOrderId()) {
+            throw new NoSuchEntityException(__('Object with order id "%1" does not exist.', $orderId));
+        }
+
+        return $order;
+    }
+
+    /**
+     * @param OrderInterface $object
+     * @return bool
+     * @throws CouldNotDeleteException
+     */
+    public function delete(OrderInterface $object): bool
     {
         try {
-            $this->objectResourceModel->delete($object);
+            $this->orderResourceModel->delete($object);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__($exception->getMessage()));
         }
 
         return true;    
-    }    
+    }
 
-    public function deleteById($id)
+    /**
+     * @param int $id
+     * @return bool
+     * @throws CouldNotDeleteException
+     * @throws NoSuchEntityException
+     */
+    public function deleteById(int $id): bool
     {
         return $this->delete($this->getById($id));
-    }    
+    }
 
-    public function getList(SearchCriteriaInterface $criteria)
+    /**
+     * @param SearchCriteriaInterface $criteria
+     * @return SearchResultsInterface
+     */
+    public function getList(SearchCriteriaInterface $criteria): SearchResultsInterface
     {
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);  

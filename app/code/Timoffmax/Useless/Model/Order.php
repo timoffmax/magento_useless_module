@@ -21,4 +21,72 @@ class Order extends AbstractModel implements OrderInterface, IdentityInterface
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
     }
+
+    /**
+     * @return int|null
+     */
+    public function getOrderId(): ?int
+    {
+        return $this->getData(self::ORDER_ID);
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getTotal(): ?float
+    {
+        return $this->getData(self::TOTAL);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCreatedAt(): ?string
+    {
+        return $this->getData(self::CREATED_AT);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUpdatedAt(): ?string
+    {
+        return $this->getData(self::UPDATED_AT);
+    }
+
+    /**
+     * @param int $orderId
+     * @return OrderInterface
+     */
+    public function setOrderId(int $orderId): OrderInterface
+    {
+        return $this->setData(self::ORDER_ID, $orderId);
+    }
+
+    /**
+     * @param float $total
+     * @return OrderInterface
+     */
+    public function setTotal(float $total): OrderInterface
+    {
+        return $this->setData(self::TOTAL, $total);
+    }
+
+    /**
+     * @param string $createdAt
+     * @return OrderInterface
+     */
+    public function setCreatedAt(string $createdAt): OrderInterface
+    {
+        return $this->setData(self::CREATED_AT, $createdAt);
+    }
+
+    /**
+     * @param string $updatedAt
+     * @return OrderInterface
+     */
+    public function setUpdatedAt(string $updatedAt): OrderInterface
+    {
+        return $this->setData(self::UPDATED_AT, $updatedAt);
+    }
 }

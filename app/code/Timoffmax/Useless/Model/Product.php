@@ -17,6 +17,9 @@ class Product extends AbstractModel implements ProductInterface, IdentityInterfa
         $this->_init('Timoffmax\Useless\Model\ResourceModel\Product');
     }
 
+    /**
+     * @return array|string[]
+     */
     public function getIdentities()
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
