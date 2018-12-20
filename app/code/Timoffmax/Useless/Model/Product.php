@@ -66,7 +66,7 @@ class Product extends AbstractModel implements ProductInterface, IdentityInterfa
      */
     public function setProductId(int $productId): ProductInterface
     {
-        return $this->getData(self::PRODUCT_ID, $productId);
+        return $this->setData(self::PRODUCT_ID, $productId);
     }
 
     /**
@@ -75,7 +75,7 @@ class Product extends AbstractModel implements ProductInterface, IdentityInterfa
      */
     public function setPrice(float $price): ProductInterface
     {
-        return $this->getData(self::PRICE, $price);
+        return $this->setData(self::PRICE, $price);
     }
 
     /**
@@ -84,7 +84,7 @@ class Product extends AbstractModel implements ProductInterface, IdentityInterfa
      */
     public function setCreatedAt(string $createdAt): ProductInterface
     {
-        return $this->getData(self::CREATED_AT, $createdAt);
+        return $this->setData(self::CREATED_AT, $createdAt);
     }
 
     /**
