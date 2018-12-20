@@ -4,6 +4,8 @@ namespace Timoffmax\Useless\Model;
 
 use Timoffmax\Useless\Api\ProductRepositoryInterface;
 use Timoffmax\Useless\Api\Data\ProductInterface;
+use Timoffmax\Useless\Api\SearchResultInterface\ProductSearchResultsInterface;
+use Timoffmax\Useless\Api\SearchResultInterface\ProductSearchResultsInterfaceFactory;
 use Timoffmax\Useless\Model\ResourceModel\Product as ProductResourceModel;
 use Timoffmax\Useless\Model\ResourceModel\Product\CollectionFactory;
 
@@ -12,8 +14,6 @@ use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\CouldNotDeleteException;
-use Magento\Framework\Api\SearchResultsInterfaceFactory;
-use Magento\Framework\Api\SearchResultsInterface;
 
 class ProductRepository implements ProductRepositoryInterface
 {
@@ -26,7 +26,7 @@ class ProductRepository implements ProductRepositoryInterface
         ProductFactory $productFactory,
         ProductResourceModel $productResourceModel,
         CollectionFactory $collectionFactory,
-        SearchResultsInterfaceFactory $searchResultsFactory       
+        ProductSearchResultsInterfaceFactory $searchResultsFactory
     ) {
         $this->productFactory = $productFactory;
         $this->productResourceModel = $productResourceModel;
@@ -35,8 +35,8 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
-     * @param ProductInterface $product
-     * @return ProductInterface
+     * @param \Timoffmax\Useless\Api\Data\ProductInterface $product
+     * @return \Timoffmax\Useless\Api\Data\ProductInterface
      * @throws CouldNotSaveException
      */
     public function save(ProductInterface $product): ProductInterface
@@ -52,7 +52,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     /**
      * @param int $id
-     * @return Product
+     * @return \Timoffmax\Useless\Api\Data\ProductInterface
      * @throws NoSuchEntityException
      */
     public function getById(int $id): ?ProductInterface
@@ -69,7 +69,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     /**
      * @param int $productId
-     * @return ProductInterface
+     * @return \Timoffmax\Useless\Api\Data\ProductInterface
      */
     public function getByProductId(int $productId): ?ProductInterface
     {
@@ -84,7 +84,7 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
-     * @param ProductInterface $product
+     * @param \Timoffmax\Useless\Api\Data\ProductInterface $product
      * @return bool
      * @throws CouldNotDeleteException
      */
@@ -111,10 +111,10 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
-     * @param SearchCriteriaInterface $searchCriteria
-     * @return \Magento\Framework\Api\SearchResultsInterface
+     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+     * @return \Timoffmax\Useless\Api\SearchResultInterface\ProductSearchResultsInterface
      */
-    public function getList(SearchCriteriaInterface $searchCriteria): SearchResultsInterface
+    public function getList(SearchCriteriaInterface $searchCriteria): ProductSearchResultsInterface
     {
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($searchCriteria);
