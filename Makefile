@@ -15,6 +15,15 @@ cache_flush:
 	php bin/magento cache:flush
 	rm -rf var/log/* var/report/* var/view_preprocessed/* generated/* pub/static/*
 
+### API
+api_get_token:
+	curl  -X POST  "http://magento.local/rest/V1/integration/admin/token" \
+	-H "Content-Type: application/json" \
+ 	-d '{"username":"tim_off_max","password": "core2extrime"}'
+
+api_test:
+	curl http://magento.local/rest/V1/timoffmax_useless/product?searchCriteria -H "Authorization: Bearer b99nmeq4uikul25jkdauywhibakkbmp6"
+
 ### Debug
 debug_magento: cache_flush
 	touch var/log/debug.log var/log/exception.log var/log/system.log
