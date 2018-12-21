@@ -13,7 +13,7 @@ use Timoffmax\Useless\Api\SearchResultInterface\ProductSearchResultsInterface;
 interface ProductRepositoryInterface
 {
     /**
-     * @param ProductInterface $product
+     * @param \Timoffmax\Useless\Api\Data\ProductInterface $product
      * @return \Timoffmax\Useless\Api\Data\ProductInterface
      */
     public function save(ProductInterface $product): ProductInterface;

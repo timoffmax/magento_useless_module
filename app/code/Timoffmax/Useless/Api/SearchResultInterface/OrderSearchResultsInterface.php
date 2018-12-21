@@ -5,18 +5,18 @@ namespace Timoffmax\Useless\Api\SearchResultInterface;
 use Magento\Framework\Api\SearchResultsInterface;
 
 /**
- * Interface ProductSearchResultsInterface
+ * Interface OrderSearchResultsInterface
  * @api
  */
-interface ProductSearchResultsInterface extends SearchResultsInterface
+interface OrderSearchResultsInterface extends SearchResultsInterface
 {
     /**
-     * @return \Timoffmax\Useless\Api\Data\ProductInterface[]
+     * @return \Timoffmax\Useless\Api\Data\OrderInterface[]
      */
     public function getItems();
 
     /**
-     * @param \Timoffmax\Useless\Api\Data\ProductInterface[] $items
+     * @param \Timoffmax\Useless\Api\Data\OrderInterface[] $items
      * @return $this
      */
     public function setItems(array $items);
