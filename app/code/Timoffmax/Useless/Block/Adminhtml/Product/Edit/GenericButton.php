@@ -4,8 +4,6 @@ namespace Timoffmax\Useless\Block\Adminhtml\Product\Edit;
 
 class GenericButton
 {
-    //putting all the button methods in here.  No "right", but the whole
-    //button/GenericButton thing seems -- not that great -- to begin with
     public function __construct(
         \Magento\Backend\Block\Widget\Context $context
     ) {
@@ -19,7 +17,7 @@ class GenericButton
     
     public function getDeleteUrl()
     {
-        return $this->getUrl('*/*/delete', ['object_id' => $this->getObjectId()]);
+        return $this->getUrl('*/*/delete', ['id' => $this->getProductId()]);
     }   
     
     public function getUrl($route = '', $params = [])
@@ -27,8 +25,8 @@ class GenericButton
         return $this->context->getUrlBuilder()->getUrl($route, $params);
     }    
     
-    public function getObjectId()
+    public function getProductId()
     {
-        return $this->context->getRequest()->getParam('product_id');
+        return $this->context->getRequest()->getParam('id');
     }     
 }
