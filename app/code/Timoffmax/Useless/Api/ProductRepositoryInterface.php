@@ -47,4 +47,10 @@ interface ProductRepositoryInterface
      * @return bool
      */
     public function deleteById(int $id): bool;
+
+    /**
+     * @param int $productId
+     * @return bool
+     */
+    public function deleteByProductId(int $productId): bool;
 }

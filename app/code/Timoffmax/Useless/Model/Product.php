@@ -31,6 +31,14 @@ class Product extends AbstractModel implements ProductInterface, IdentityInterfa
     /**
      * @return int|null
      */
+    public function getId(): ?int
+    {
+        return $this->getData($this->_idFieldName);
+    }
+
+    /**
+     * @return int|null
+     */
     public function getProductId(): ?int
     {
         return $this->getData(self::PRODUCT_ID);
@@ -58,6 +66,15 @@ class Product extends AbstractModel implements ProductInterface, IdentityInterfa
     public function getUpdatedAt(): ?string
     {
         return $this->getData(self::UPDATED_AT);
+    }
+
+    /**
+     * @param int $id
+     * @return ProductInterface
+     */
+    public function setId($id): ProductInterface
+    {
+        return $this->setData($this->_idFieldName, $id);
     }
 
     /**

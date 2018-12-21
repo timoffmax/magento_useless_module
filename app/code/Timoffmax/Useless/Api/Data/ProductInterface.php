@@ -15,7 +15,7 @@ interface ProductInterface
     /**
      * @return int|null
      */
-    public function getId();
+    public function getId(): ?int;
 
     /**
      * @return int|null
@@ -36,6 +36,12 @@ interface ProductInterface
      * @return string|null
      */
     public function getUpdatedAt(): ?string;
+
+    /**
+     * @param int $id
+     * @return ProductInterface
+     */
+    public function setId($id);
 
     /**
      * @param int $productId

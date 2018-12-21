@@ -1,13 +1,50 @@
 <?xml version="1.0"?>
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
-    <route url="/V1/timoffmax_useless/product" method="GET" >
+    <!--View-->
+    <route url="/V1/timoffmax_useless/product" method="GET">
         <service class="Timoffmax\Useless\Api\ProductRepositoryInterface" method="getList"/>
         <resources>
             <resource ref="Timoffmax_Useless::products"/>
         </resources>
     </route>
-    <route url="/V1/timoffmax_useless/product/:id" method="GET" >
+    <route url="/V1/timoffmax_useless/product/:id" method="GET">
         <service class="Timoffmax\Useless\Api\ProductRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="Timoffmax_Useless::products"/>
+        </resources>
+    </route>
+    <route url="/V1/timoffmax_useless/product/:productId/byProductId" method="GET" >
+        <service class="Timoffmax\Useless\Api\ProductRepositoryInterface" method="getByProductId"/>
+        <resources>
+            <resource ref="Timoffmax_Useless::products"/>
+        </resources>
+    </route>
+
+    <!--Create-->
+    <route url="/V1/timoffmax_useless/product" method="POST">
+        <service class="Timoffmax\Useless\Api\ProductRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Timoffmax_Useless::products"/>
+        </resources>
+    </route>
+
+    <!--Update-->
+    <route url="/V1/timoffmax_useless/product" method="PUT">
+        <service class="Timoffmax\Useless\Api\ProductRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Timoffmax_Useless::products"/>
+        </resources>
+    </route>
+
+    <!--Delete-->
+    <route url="/V1/timoffmax_useless/product/:id" method="DELETE">
+        <service class="Timoffmax\Useless\Api\ProductRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="Timoffmax_Useless::products"/>
+        </resources>
+    </route>
+    <route url="/V1/timoffmax_useless/product/:productId/byProductId/" method="DELETE">
+        <service class="Timoffmax\Useless\Api\ProductRepositoryInterface" method="deleteByProductId"/>
         <resources>
             <resource ref="Timoffmax_Useless::products"/>
         </resources>

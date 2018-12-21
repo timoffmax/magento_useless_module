@@ -14,6 +14,7 @@ use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Reflection\DataObjectProcessor;
 
 class ProductRepository implements ProductRepositoryInterface
 {
@@ -21,17 +22,20 @@ class ProductRepository implements ProductRepositoryInterface
     protected $productResourceModel;
     protected $collectionFactory;
     protected $searchResultsFactory;
-    
+    protected $dataObjectProcessor;
+
     public function __construct(
         ProductFactory $productFactory,
         ProductResourceModel $productResourceModel,
         CollectionFactory $collectionFactory,
-        ProductSearchResultsInterfaceFactory $searchResultsFactory
+        ProductSearchResultsInterfaceFactory $searchResultsFactory,
+        DataObjectProcessor $dataObjectProcessor
     ) {
         $this->productFactory = $productFactory;
         $this->productResourceModel = $productResourceModel;
         $this->collectionFactory = $collectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
+        $this->dataObjectProcessor = $dataObjectProcessor;
     }
 
     /**
@@ -41,6 +45,23 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function save(ProductInterface $product): ProductInterface
     {
+        $productModel = null;
+
+        if (empty($product->getId())) {
+            $productModel = $this->productFactory->create();
+        } else {
+            $productModel = $this->getById($product->getId());
+        }
+
+        $productDataAttributes = $this->dataObjectProcessor->buildOutputDataArray(
+            $product,
+            ProductInterface::class
+        );
+
+        foreach ($productDataAttributes as $attributeCode => $attributeData) {
+            $productModel->setDataUsingMethod($attributeCode, $attributeData);
+        }
+
         try {
             $this->productResourceModel->save($product);
         } catch(\Exception $e) {
@@ -48,6 +69,15 @@ class ProductRepository implements ProductRepositoryInterface
         }
 
         return $product;
+    }
+
+    public function update(int $id)
+    {
+        try {
+            $product = $this->getById($id);
+        } catch (NoSuchEntityException $e) {
+
+        }
     }
 
     /**
@@ -159,5 +189,14 @@ class ProductRepository implements ProductRepositoryInterface
         $searchResults->setItems($products);
 
         return $searchResults;        
+    }
+
+    /**
+     * @param int $productId
+     * @return bool
+     */
+    public function deleteByProductId(int $productId): bool
+    {
+        return $this->delete($this->getByProductId($productId));
     }
 }
