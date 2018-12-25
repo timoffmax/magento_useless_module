@@ -12,8 +12,8 @@ fix-permissions-arch:
 	chmod -R 777 var/ generated/
 
 cache_flush:
-	php bin/magento cache:flush
 	rm -rf var/log/* var/report/* var/view_preprocessed/* generated/* pub/static/*
+	php bin/magento cache:flush
 
 ###########
 ### API ###

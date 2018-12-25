@@ -20,6 +20,8 @@
     <type name="Magento\Framework\Console\CommandList">
         <arguments>
             <argument name="commands" xsi:type="array">
+                <item name="timoffmaxUselessProductGet" xsi:type="object">Timoffmax\Useless\Console\Command\Product\GetById</item>
+                <item name="timoffmaxUselessProductGetByProductId" xsi:type="object">Timoffmax\Useless\Console\Command\Product\GetByProductId</item>
                 <item name="timoffmaxUselessProductAdd" xsi:type="object">Timoffmax\Useless\Console\Command\Product\Add</item>
             </argument>
         </arguments>

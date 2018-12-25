@@ -14,9 +14,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class Add extends Command
 {
-    const INPUT_KEY_PRODUCT_ID = 'product_id';
+    const INPUT_KEY_PRODUCT_ID = 'productId';
     const INPUT_KEY_PRICE = 'price';
 
+    const COMMAND_PREFIX = 'timoffmax_useless:product:';
+    const COMMAND_NAME = self::COMMAND_PREFIX . 'add';
+
+    /** @var ProductFactory */
     private $productFactory;
 
     public function __construct(ProductFactory $productFactory)
@@ -28,7 +32,8 @@ class Add extends Command
 
     protected function configure()
     {
-        $this->setName('timoffmax_useless:product:add')
+        $this->setName(self::COMMAND_NAME)
+            ->setDescription('Create new timoffmax_useless product item')
             ->addArgument(
                 self::INPUT_KEY_PRODUCT_ID,
                 InputArgument::REQUIRED,
