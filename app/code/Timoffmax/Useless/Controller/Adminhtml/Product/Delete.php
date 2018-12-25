@@ -14,18 +14,18 @@ class Delete extends Action
     /**
      * @var \Timoffmax\Useless\Model\ProductRepository
      */
-    protected $objectRepository;
+    protected $productRepository;
 
     /**
      * Delete constructor.
-     * @param \Timoffmax\Useless\Model\ProductRepository $objectRepository
+     * @param \Timoffmax\Useless\Model\ProductRepository $productRepository
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
-        ProductRepository $objectRepository,
+        ProductRepository $productRepository,
         Context $context
     ) {
-        $this->objectRepository = $objectRepository;
+        $this->productRepository = $productRepository;
 
         parent::__construct($context);
     }
@@ -33,7 +33,7 @@ class Delete extends Action
     public function execute()
     {
         // check if we know what should be deleted
-        $id = $this->getRequest()->getParam('object_id');
+        $id = $this->getRequest()->getParam('id');
 
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
@@ -41,20 +41,20 @@ class Delete extends Action
         if ($id) {
             try {
                 // delete model
-                $this->objectRepository->deleteById($id);
+                $this->productRepository->deleteById($id);
                 // display success message
-                $this->messageManager->addSuccess(__('You have deleted the product.'));
+                $this->messageManager->addSuccessMessage(__('You have deleted the product.'));
                 // go to grid
                 return $resultRedirect->setPath('*/*/');
             } catch (\Exception $e) {
                 // display error message
-                $this->messageManager->addError($e->getMessage());
+                $this->messageManager->addErrorMessage($e->getMessage());
                 // go back to edit form
                 return $resultRedirect->setPath('*/*/edit', ['id' => $id]);
             }
         }
         // display error message
-        $this->messageManager->addError(__('We can not find an object to delete.'));
+        $this->messageManager->addErrorMessage(__('We can not find a product to delete.'));
         // go to grid
         return $resultRedirect->setPath('*/*/');
     }

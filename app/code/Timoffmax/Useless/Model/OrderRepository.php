@@ -6,14 +6,15 @@ use Timoffmax\Useless\Api\OrderRepositoryInterface;
 use Timoffmax\Useless\Api\Data\OrderInterface;
 use Timoffmax\Useless\Model\ResourceModel\Order as OrderResourceModel;
 use Timoffmax\Useless\Model\ResourceModel\Order\CollectionFactory;
+use Timoffmax\Useless\Api\SearchResultInterface\OrderSearchResultsInterface;
+use Timoffmax\Useless\Api\SearchResultInterface\OrderSearchResultsInterfaceFactory;
 
 use Magento\Framework\Api\SortOrder;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\CouldNotDeleteException;
-use Magento\Framework\Api\SearchResultsInterface;
-use Magento\Framework\Api\SearchResultsInterfaceFactory;
+use Magento\Framework\Reflection\DataObjectProcessor;
 
 class OrderRepository implements OrderRepositoryInterface
 {
@@ -21,38 +22,41 @@ class OrderRepository implements OrderRepositoryInterface
     protected $orderResourceModel;
     protected $collectionFactory;
     protected $searchResultsFactory;
-    
+    protected $dataObjectProcessor;
+
     public function __construct(
         OrderFactory $orderFactory,
         OrderResourceModel $orderResourceModel,
         CollectionFactory $collectionFactory,
-        SearchResultsInterfaceFactory $searchResultsFactory       
+        OrderSearchResultsInterfaceFactory $searchResultsFactory,
+        DataObjectProcessor $dataObjectProcessor
     ) {
         $this->orderFactory = $orderFactory;
         $this->orderResourceModel = $orderResourceModel;
         $this->collectionFactory = $collectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
+        $this->dataObjectProcessor = $dataObjectProcessor;
     }
 
     /**
-     * @param OrderInterface $object
-     * @return OrderInterface
+     * @param \Timoffmax\Useless\Api\Data\OrderInterface $order
+     * @return \Timoffmax\Useless\Api\Data\OrderInterface
      * @throws CouldNotSaveException
      */
-    public function save(OrderInterface $object): OrderInterface
+    public function save(OrderInterface $order): OrderInterface
     {
         try {
-            $this->orderResourceModel->save($object);
+            $this->orderResourceModel->save($order);
         } catch(\Exception $e) {
             throw new CouldNotSaveException(__($e->getMessage()));
         }
 
-        return $object;
+        return $order;
     }
 
     /**
      * @param int $id
-     * @return OrderInterface
+     * @return \Timoffmax\Useless\Api\Data\OrderInterface
      * @throws NoSuchEntityException
      */
     public function getById(int $id): OrderInterface
@@ -69,7 +73,7 @@ class OrderRepository implements OrderRepositoryInterface
 
     /**
      * @param int $orderId
-     * @return OrderInterface
+     * @return \Timoffmax\Useless\Api\Data\OrderInterface
      */
     public function getByOrderId(int $orderId): ?OrderInterface
     {
@@ -84,14 +88,14 @@ class OrderRepository implements OrderRepositoryInterface
     }
 
     /**
-     * @param OrderInterface $object
+     * @param \Timoffmax\Useless\Api\Data\OrderInterface $order
      * @return bool
      * @throws CouldNotDeleteException
      */
-    public function delete(OrderInterface $object): bool
+    public function delete(OrderInterface $order): bool
     {
         try {
-            $this->orderResourceModel->delete($object);
+            $this->orderResourceModel->delete($order);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__($exception->getMessage()));
         }
@@ -111,10 +115,10 @@ class OrderRepository implements OrderRepositoryInterface
     }
 
     /**
-     * @param SearchCriteriaInterface $criteria
-     * @return SearchResultsInterface
+     * @param \Magento\Framework\Api\SearchCriteriaInterface $criteria
+     * @return \Timoffmax\Useless\Api\SearchResultInterface\OrderSearchResultsInterface
      */
-    public function getList(SearchCriteriaInterface $criteria): SearchResultsInterface
+    public function getList(SearchCriteriaInterface $criteria): OrderSearchResultsInterface
     {
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);  
@@ -159,5 +163,14 @@ class OrderRepository implements OrderRepositoryInterface
         $searchResults->setItems($objects);
 
         return $searchResults;        
+    }
+
+    /**
+     * @param int $orderId
+     * @return bool
+     */
+    public function deleteByOrderId(int $orderId): bool
+    {
+        return $this->delete($this->getByOrderId($orderId));
     }
 }

@@ -6,6 +6,9 @@ use \Timoffmax\Useless\Api\Data\ProductInterface;
 use \Magento\Framework\DataObject\IdentityInterface;
 use \Magento\Framework\Model\AbstractModel;
 
+/**
+ * Class Product
+ */
 class Product extends AbstractModel implements ProductInterface, IdentityInterface
 {
     const CACHE_TAG = 'timoffmax_useless_product';
@@ -23,6 +26,14 @@ class Product extends AbstractModel implements ProductInterface, IdentityInterfa
     public function getIdentities()
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->getData($this->_idFieldName);
     }
 
     /**
@@ -58,12 +69,21 @@ class Product extends AbstractModel implements ProductInterface, IdentityInterfa
     }
 
     /**
+     * @param int $id
+     * @return ProductInterface
+     */
+    public function setId($id): ProductInterface
+    {
+        return $this->setData($this->_idFieldName, $id);
+    }
+
+    /**
      * @param int $productId
      * @return ProductInterface
      */
     public function setProductId(int $productId): ProductInterface
     {
-        return $this->getData(self::PRODUCT_ID, $productId);
+        return $this->setData(self::PRODUCT_ID, $productId);
     }
 
     /**
@@ -72,7 +92,7 @@ class Product extends AbstractModel implements ProductInterface, IdentityInterfa
      */
     public function setPrice(float $price): ProductInterface
     {
-        return $this->getData(self::PRICE, $price);
+        return $this->setData(self::PRICE, $price);
     }
 
     /**
@@ -81,7 +101,7 @@ class Product extends AbstractModel implements ProductInterface, IdentityInterfa
      */
     public function setCreatedAt(string $createdAt): ProductInterface
     {
-        return $this->getData(self::CREATED_AT, $createdAt);
+        return $this->setData(self::CREATED_AT, $createdAt);
     }
 
     /**

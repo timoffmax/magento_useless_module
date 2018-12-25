@@ -4,6 +4,8 @@ namespace Timoffmax\Useless\Model;
 
 use Timoffmax\Useless\Api\ProductRepositoryInterface;
 use Timoffmax\Useless\Api\Data\ProductInterface;
+use Timoffmax\Useless\Api\SearchResultInterface\ProductSearchResultsInterface;
+use Timoffmax\Useless\Api\SearchResultInterface\ProductSearchResultsInterfaceFactory;
 use Timoffmax\Useless\Model\ResourceModel\Product as ProductResourceModel;
 use Timoffmax\Useless\Model\ResourceModel\Product\CollectionFactory;
 
@@ -12,8 +14,7 @@ use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\CouldNotDeleteException;
-use Magento\Framework\Api\SearchResultsInterfaceFactory;
-use Magento\Framework\Api\SearchResultsInterface;
+use Magento\Framework\Reflection\DataObjectProcessor;
 
 class ProductRepository implements ProductRepositoryInterface
 {
@@ -21,37 +22,67 @@ class ProductRepository implements ProductRepositoryInterface
     protected $productResourceModel;
     protected $collectionFactory;
     protected $searchResultsFactory;
-    
+    protected $dataObjectProcessor;
+
     public function __construct(
         ProductFactory $productFactory,
         ProductResourceModel $productResourceModel,
         CollectionFactory $collectionFactory,
-        SearchResultsInterfaceFactory $searchResultsFactory       
+        ProductSearchResultsInterfaceFactory $searchResultsFactory,
+        DataObjectProcessor $dataObjectProcessor
     ) {
         $this->productFactory = $productFactory;
         $this->productResourceModel = $productResourceModel;
         $this->collectionFactory = $collectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
+        $this->dataObjectProcessor = $dataObjectProcessor;
     }
 
     /**
-     * @param ProductInterface $product
-     * @return ProductInterface
+     * @param \Timoffmax\Useless\Api\Data\ProductInterface $product
+     * @return \Timoffmax\Useless\Api\Data\ProductInterface
      * @throws CouldNotSaveException
      */
     public function save(ProductInterface $product): ProductInterface
     {
+        $productModel = null;
+
+        if (empty($product->getId())) {
+            $productModel = $this->productFactory->create();
+        } else {
+            $productModel = $this->getById($product->getId());
+        }
+
+        $productDataAttributes = $this->dataObjectProcessor->buildOutputDataArray(
+            $product,
+            ProductInterface::class
+        );
+
+        foreach ($productDataAttributes as $attributeCode => $attributeData) {
+            $productModel->setDataUsingMethod($attributeCode, $attributeData);
+        }
+
         try {
             $this->productResourceModel->save($product);
         } catch(\Exception $e) {
             throw new CouldNotSaveException(__($e->getMessage()));
         }
+
         return $product;
+    }
+
+    public function update(int $id)
+    {
+        try {
+            $product = $this->getById($id);
+        } catch (NoSuchEntityException $e) {
+
+        }
     }
 
     /**
      * @param int $id
-     * @return Product
+     * @return \Timoffmax\Useless\Api\Data\ProductInterface
      * @throws NoSuchEntityException
      */
     public function getById(int $id): ?ProductInterface
@@ -68,7 +99,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     /**
      * @param int $productId
-     * @return ProductInterface
+     * @return \Timoffmax\Useless\Api\Data\ProductInterface
      */
     public function getByProductId(int $productId): ?ProductInterface
     {
@@ -83,7 +114,7 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
-     * @param ProductInterface $product
+     * @param \Timoffmax\Useless\Api\Data\ProductInterface $product
      * @return bool
      * @throws CouldNotDeleteException
      */
@@ -110,16 +141,16 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
-     * @param SearchCriteriaInterface $criteria
-     * @return \Magento\Framework\Api\SearchResultsInterface
+     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+     * @return \Timoffmax\Useless\Api\SearchResultInterface\ProductSearchResultsInterface
      */
-    public function getList(SearchCriteriaInterface $criteria): SearchResultsInterface
+    public function getList(SearchCriteriaInterface $searchCriteria): ProductSearchResultsInterface
     {
         $searchResults = $this->searchResultsFactory->create();
-        $searchResults->setSearchCriteria($criteria);  
+        $searchResults->setSearchCriteria($searchCriteria);
         $collection = $this->collectionFactory->create();
 
-        foreach ($criteria->getFilterGroups() as $filterGroup) {
+        foreach ($searchCriteria->getFilterGroups() as $filterGroup) {
             $fields = [];
             $conditions = [];
 
@@ -135,7 +166,7 @@ class ProductRepository implements ProductRepositoryInterface
         }
 
         $searchResults->setTotalCount($collection->getSize());
-        $sortOrders = $criteria->getSortOrders();
+        $sortOrders = $searchCriteria->getSortOrders();
 
         if ($sortOrders) {
             /** @var SortOrder $sortOrder */
@@ -147,16 +178,25 @@ class ProductRepository implements ProductRepositoryInterface
             }
         }
 
-        $collection->setCurPage($criteria->getCurrentPage());
-        $collection->setPageSize($criteria->getPageSize());
-        $objects = [];
+        $collection->setCurPage($searchCriteria->getCurrentPage());
+        $collection->setPageSize($searchCriteria->getPageSize());
+        $products = [];
 
-        foreach ($collection as $objectModel) {
-            $objects[] = $objectModel;
+        foreach ($collection as $product) {
+            $products[] = $product;
         }
 
-        $searchResults->setItems($objects);
+        $searchResults->setItems($products);
 
         return $searchResults;        
+    }
+
+    /**
+     * @param int $productId
+     * @return bool
+     */
+    public function deleteByProductId(int $productId): bool
+    {
+        return $this->delete($this->getByProductId($productId));
     }
 }

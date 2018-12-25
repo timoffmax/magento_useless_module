@@ -12,6 +12,11 @@ interface OrderInterface
     /**
      * @return int|null
      */
+    public function getId(): ?int;
+
+    /**
+     * @return int|null
+     */
     public function getOrderId(): ?int;
 
     /**
@@ -28,6 +33,12 @@ interface OrderInterface
      * @return string|null
      */
     public function getUpdatedAt(): ?string;
+
+    /**
+     * @param int $id
+     * @return OrderInterface
+     */
+    public function setId($id);
 
     /**
      * @param int $orderId

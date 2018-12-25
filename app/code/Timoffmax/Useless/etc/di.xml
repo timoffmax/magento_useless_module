@@ -2,6 +2,11 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Timoffmax\Useless\Api\Data\ProductInterface" type="Timoffmax\Useless\Model\Product"/>
     <preference for="Timoffmax\Useless\Api\ProductRepositoryInterface" type="Timoffmax\Useless\Model\ProductRepository"/>
+    <preference for="Timoffmax\Useless\Api\SearchResultInterface\ProductSearchResultsInterface" type="Timoffmax\Useless\Model\ProductSearchResults"/>
+
+    <preference for="Timoffmax\Useless\Api\Data\OrderInterface" type="Timoffmax\Useless\Model\Order"/>
+    <preference for="Timoffmax\Useless\Api\OrderRepositoryInterface" type="Timoffmax\Useless\Model\OrderRepository"/>
+    <preference for="Timoffmax\Useless\Api\SearchResultInterface\OrderSearchResultsInterface" type="Timoffmax\Useless\Model\OrderSearchResults"/>
 
     <type name="Magento\Catalog\Model\Product">
         <plugin name="Timoffmax_Useless_ProductPlugin" type="Timoffmax\Useless\Plugin\ProductPlugin"/>

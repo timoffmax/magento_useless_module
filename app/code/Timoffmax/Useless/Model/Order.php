@@ -25,6 +25,14 @@ class Order extends AbstractModel implements OrderInterface, IdentityInterface
     /**
      * @return int|null
      */
+    public function getId(): ?int
+    {
+        return $this->getData($this->_idFieldName);
+    }
+
+    /**
+     * @return int|null
+     */
     public function getOrderId(): ?int
     {
         return $this->getData(self::ORDER_ID);
@@ -52,6 +60,15 @@ class Order extends AbstractModel implements OrderInterface, IdentityInterface
     public function getUpdatedAt(): ?string
     {
         return $this->getData(self::UPDATED_AT);
+    }
+
+    /**
+     * @param int $id
+     * @return OrderInterface
+     */
+    public function setId($id)
+    {
+        return $this->setData($this->_idFieldName, $id);
     }
 
     /**

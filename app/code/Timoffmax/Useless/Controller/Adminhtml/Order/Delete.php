@@ -14,18 +14,18 @@ class Delete extends Action
     /**
      * @var \Timoffmax\Useless\Model\OrderRepository
      */
-    protected $objectRepository;
+    protected $orderRepository;
 
     /**
      * Delete constructor.
-     * @param \Timoffmax\Useless\Model\OrderRepository $objectRepository
+     * @param \Timoffmax\Useless\Model\OrderRepository $orderRepository
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
-        OrderRepository $objectRepository,
+        OrderRepository $orderRepository,
         Context $context
     ) {
-        $this->objectRepository = $objectRepository;
+        $this->orderRepository = $orderRepository;
 
         parent::__construct($context);
     }
@@ -33,7 +33,7 @@ class Delete extends Action
     public function execute()
     {
         // check if we know what should be deleted
-        $id = $this->getRequest()->getParam('object_id');
+        $id = $this->getRequest()->getParam('id');
 
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
@@ -41,20 +41,20 @@ class Delete extends Action
         if ($id) {
             try {
                 // delete model
-                $this->objectRepository->deleteById($id);
+                $this->orderRepository->deleteById($id);
                 // display success message
-                $this->messageManager->addSuccess(__('You have deleted the order.'));
+                $this->messageManager->addSuccessMessage(__('You have deleted the order.'));
                 // go to grid
                 return $resultRedirect->setPath('*/*/');
             } catch (\Exception $e) {
                 // display error message
-                $this->messageManager->addError($e->getMessage());
+                $this->messageManager->addErrorMessage($e->getMessage());
                 // go back to edit form
                 return $resultRedirect->setPath('*/*/edit', ['id' => $id]);
             }
         }
         // display error message
-        $this->messageManager->addError(__('We can not find an object to delete.'));
+        $this->messageManager->addErrorMessage(__('We can not find an order to delete.'));
         // go to grid
         return $resultRedirect->setPath('*/*/');
     }
