@@ -7,6 +7,9 @@ use Timoffmax\Useless\Api\SearchResultInterface\OrderSearchResultsInterface;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
 
+/**
+ * Interface OrderRepositoryInterface
+ */
 interface OrderRepositoryInterface
 {
     /**
