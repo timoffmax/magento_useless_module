@@ -32,6 +32,18 @@
                 <item name="timoffmaxUselessProductDelete" xsi:type="object">
                     Timoffmax\Useless\Console\Command\Product\DeleteCommand
                 </item>
+                <item name="timoffmaxUselessOrderGet" xsi:type="object">
+                    Timoffmax\Useless\Console\Command\Order\GetCommand
+                </item>
+                <item name="timoffmaxUselessOrderAdd" xsi:type="object">
+                    Timoffmax\Useless\Console\Command\Order\AddCommand
+                </item>
+                <item name="timoffmaxUselessOrderUpdate" xsi:type="object">
+                    Timoffmax\Useless\Console\Command\Order\UpdateCommand
+                </item>
+                <item name="timoffmaxUselessOrderDelete" xsi:type="object">
+                    Timoffmax\Useless\Console\Command\Order\DeleteCommand
+                </item>
             </argument>
         </arguments>
     </type>
