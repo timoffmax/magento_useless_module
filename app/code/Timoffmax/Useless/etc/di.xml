@@ -8,10 +8,43 @@
     <preference for="Timoffmax\Useless\Api\OrderRepositoryInterface" type="Timoffmax\Useless\Model\OrderRepository"/>
     <preference for="Timoffmax\Useless\Api\SearchResultInterface\OrderSearchResultsInterface" type="Timoffmax\Useless\Model\OrderSearchResults"/>
 
+    <!--Plugins-->
     <type name="Magento\Catalog\Model\Product">
         <plugin name="Timoffmax_Useless_ProductPlugin" type="Timoffmax\Useless\Plugin\ProductPlugin"/>
     </type>
     <type name="Magento\Sales\Model\Order">
         <plugin name="Timoffmax_Useless_OrderPlugin" type="Timoffmax\Useless\Plugin\OrderPlugin"/>
+    </type>
+
+    <!--Commands-->
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="timoffmaxUselessProductGet" xsi:type="object">
+                    Timoffmax\Useless\Console\Command\Product\GetCommand
+                </item>
+                <item name="timoffmaxUselessProductAdd" xsi:type="object">
+                    Timoffmax\Useless\Console\Command\Product\AddCommand
+                </item>
+                <item name="timoffmaxUselessProductUpdate" xsi:type="object">
+                    Timoffmax\Useless\Console\Command\Product\UpdateCommand
+                </item>
+                <item name="timoffmaxUselessProductDelete" xsi:type="object">
+                    Timoffmax\Useless\Console\Command\Product\DeleteCommand
+                </item>
+                <item name="timoffmaxUselessOrderGet" xsi:type="object">
+                    Timoffmax\Useless\Console\Command\Order\GetCommand
+                </item>
+                <item name="timoffmaxUselessOrderAdd" xsi:type="object">
+                    Timoffmax\Useless\Console\Command\Order\AddCommand
+                </item>
+                <item name="timoffmaxUselessOrderUpdate" xsi:type="object">
+                    Timoffmax\Useless\Console\Command\Order\UpdateCommand
+                </item>
+                <item name="timoffmaxUselessOrderDelete" xsi:type="object">
+                    Timoffmax\Useless\Console\Command\Order\DeleteCommand
+                </item>
+            </argument>
+        </arguments>
     </type>
 </config>
