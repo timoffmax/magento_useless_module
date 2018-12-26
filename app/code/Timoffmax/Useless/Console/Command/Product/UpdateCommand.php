@@ -53,7 +53,7 @@ class UpdateCommand extends Command implements CommandInterface
 
         $this->setName(self::COMMAND_NAME)
             ->setDefinition($options)
-            ->setDescription('Update timoffmax_useless product by ID')
+            ->setDescription('Update timoffmax_useless product whether by ID or original product ID')
         ;
 
         parent::configure();
@@ -65,16 +65,28 @@ class UpdateCommand extends Command implements CommandInterface
         $productId = $input->getOption(self::INPUT_KEY_PRODUCT_ID);
         $price = $input->getOption(self::INPUT_KEY_PRICE);
 
-        /** @var Product $product */
-        $product = $this->productRepository->getById($id);
+        if (!empty($id) || !empty($productId)) {
+            /** @var Product $product */
+            if (!empty($id)) {
+                $product = $this->productRepository->getById($id);
+            } else {
+                $product = $this->productRepository->getByProductId($productId);
+            }
+        } else {
+            $output->writeln("Please, specify 'id' or 'productId' option.");
 
-        if ($productId) {
+            return Cli::RETURN_FAILURE;
+        }
+
+        if (!empty($productId)) {
             $product->setProductId($productId);
         }
 
-        if ($price) {
+        if (isset($price)) {
             $product->setPrice($price);
         }
+
+        $this->productRepository->save($product);
 
         $output->writeln("--- Result ---");
         $output->writeln("ID: {$product->getId()}");
