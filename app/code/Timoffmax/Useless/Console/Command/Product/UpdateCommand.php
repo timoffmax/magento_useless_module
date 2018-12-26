@@ -2,17 +2,17 @@
 
 namespace Timoffmax\Useless\Console\Command\Product;
 
+use Symfony\Component\Console\Input\InputOption;
 use Timoffmax\Useless\Model\Product;
 use Timoffmax\Useless\Model\ProductRepository;
 
 use Magento\Framework\Console\Cli;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 
-class Update extends Command
+class UpdateCommand extends Command
 {
     const INPUT_KEY_ID = 'id';
     const INPUT_KEY_PRODUCT_ID = 'productId';
@@ -35,22 +35,30 @@ class Update extends Command
 
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME)
-            ->setDescription('Update timoffmax_useless product by ID')
-            ->addArgument(
+        $options = [
+            new InputOption(
                 self::INPUT_KEY_ID,
-                InputArgument::REQUIRED,
+                null,
+                InputOption::VALUE_REQUIRED,
                 'ID'
-            )
-        ;
+            ),
+            new InputOption(
+                self::INPUT_KEY_PRODUCT_ID,
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Original product ID'
+            ),
+            new InputOption(
+                self::INPUT_KEY_PRICE,
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'New product price'
+            ),
+        ];
 
         $this->setName(self::COMMAND_NAME)
+            ->setDefinition($options)
             ->setDescription('Update timoffmax_useless product by ID')
-            ->addArgument(
-                self::INPUT_KEY_ID,
-                InputArgument::REQUIRED,
-                'ID'
-            )
         ;
 
         parent::configure();
@@ -58,13 +66,26 @@ class Update extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $id = $input->getArgument(self::INPUT_KEY_ID);
+        $id = $input->getOption(self::INPUT_KEY_ID);
+        $productId = $input->getOption(self::INPUT_KEY_PRODUCT_ID);
+        $price = $input->getOption(self::INPUT_KEY_PRICE);
 
         /** @var Product $product */
         $product = $this->productRepository->getById($id);
 
+        if ($productId) {
+            $product->setProductId($productId);
+        }
+
+        if ($price) {
+            $product->setPrice($price);
+        }
+
+        $output->writeln("--- Result ---");
         $output->writeln("ID: {$product->getId()}");
         $output->writeln("Product ID: {$product->getProductId()}");
         $output->writeln("Price: {$product->getPrice()}");
+
+        return Cli::RETURN_SUCCESS;
     }
 }

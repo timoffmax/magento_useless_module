@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 
-class Add extends Command
+class AddCommand extends Command
 {
     const INPUT_KEY_PRODUCT_ID = 'productId';
     const INPUT_KEY_PRICE = 'price';
