@@ -8,7 +8,6 @@ use Timoffmax\Useless\Model\Product;
 use Timoffmax\Useless\Model\ProductRepository;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

@@ -11,13 +11,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 
-class DeleteCommand extends Command
+class DeleteCommand extends Command implements CommandInterface
 {
-    const INPUT_KEY_ID = 'id';
-    const INPUT_KEY_PRODUCT_ID = 'productId';
-
-    const COMMAND_PREFIX = 'timoffmax_useless:product:';
-    const COMMAND_NAME = self::COMMAND_PREFIX . 'delete';
+    public const COMMAND_NAME = self::COMMAND_PREFIX . 'delete';
 
     /**
      * @var ProductRepository

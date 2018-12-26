@@ -12,13 +12,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 
-class AddCommand extends Command
+class AddCommand extends Command implements CommandInterface
 {
-    const INPUT_KEY_PRODUCT_ID = 'productId';
-    const INPUT_KEY_PRICE = 'price';
-
-    const COMMAND_PREFIX = 'timoffmax_useless:product:';
-    const COMMAND_NAME = self::COMMAND_PREFIX . 'add';
+    public const COMMAND_NAME = self::COMMAND_PREFIX . 'add';
 
     /** @var ProductFactory */
     private $productFactory;

@@ -12,14 +12,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 
-class UpdateCommand extends Command
+class UpdateCommand extends Command implements CommandInterface
 {
-    const INPUT_KEY_ID = 'id';
-    const INPUT_KEY_PRODUCT_ID = 'productId';
-    const INPUT_KEY_PRICE = 'price';
-
-    const COMMAND_PREFIX = 'timoffmax_useless:product:';
-    const COMMAND_NAME = self::COMMAND_PREFIX . 'update';
+    public const COMMAND_NAME = self::COMMAND_PREFIX . 'update';
 
     /**
      * @var ProductRepository
