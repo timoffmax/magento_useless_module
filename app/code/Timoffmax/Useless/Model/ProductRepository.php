@@ -45,23 +45,6 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function save(ProductInterface $product): ProductInterface
     {
-        $productModel = null;
-
-        if (empty($product->getId())) {
-            $productModel = $this->productFactory->create();
-        } else {
-            $productModel = $this->getById($product->getId());
-        }
-
-        $productDataAttributes = $this->dataObjectProcessor->buildOutputDataArray(
-            $product,
-            ProductInterface::class
-        );
-
-        foreach ($productDataAttributes as $attributeCode => $attributeData) {
-            $productModel->setDataUsingMethod($attributeCode, $attributeData);
-        }
-
         try {
             $this->productResourceModel->save($product);
         } catch(\Exception $e) {
@@ -69,15 +52,6 @@ class ProductRepository implements ProductRepositoryInterface
         }
 
         return $product;
-    }
-
-    public function update(int $id)
-    {
-        try {
-            $product = $this->getById($id);
-        } catch (NoSuchEntityException $e) {
-
-        }
     }
 
     /**

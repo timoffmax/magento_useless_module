@@ -89,13 +89,22 @@
                 <label translate="true">Order ID</label>
             </settings>
         </column>
+        <column name="original_total"
+                class="Magento\Ui\Component\Listing\Columns\Column"
+                component="Magento_Ui/js/grid/columns/column"
+                sortOrder="25">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Original Order Total</label>
+            </settings>
+        </column>
         <column name="total"
                 class="Magento\Ui\Component\Listing\Columns\Column"
                 component="Magento_Ui/js/grid/columns/column"
                 sortOrder="30">
             <settings>
                 <filter>textRange</filter>
-                <label translate="true">Order Total</label>
+                <label translate="true">Converted Order Total</label>
             </settings>
         </column>
         <column name="created_at"

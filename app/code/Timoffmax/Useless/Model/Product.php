@@ -53,6 +53,14 @@ class Product extends AbstractModel implements ProductInterface, IdentityInterfa
     }
 
     /**
+     * @return float|null
+     */
+    public function getOriginalPrice(): ?float
+    {
+        return $this->getData(self::ORIGINAL_PRICE);
+    }
+
+    /**
      * @return string|null
      */
     public function getCreatedAt(): ?string
@@ -93,6 +101,15 @@ class Product extends AbstractModel implements ProductInterface, IdentityInterfa
     public function setPrice(float $price): ProductInterface
     {
         return $this->setData(self::PRICE, $price);
+    }
+
+    /**
+     * @param float $originalPrice
+     * @return ProductInterface
+     */
+    public function setOriginalPrice(float $originalPrice): ProductInterface
+    {
+        return $this->setData(self::ORIGINAL_PRICE, $originalPrice);
     }
 
     /**

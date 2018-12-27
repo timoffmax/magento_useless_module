@@ -8,6 +8,7 @@ namespace Timoffmax\Useless\Api\Data;
 interface ProductInterface
 {
     public const PRODUCT_ID = 'product_id';
+    public const ORIGINAL_PRICE = 'original_price';
     public const PRICE = 'price';
     public const CREATED_AT = 'created_at';
     public const UPDATED_AT = 'updated_at';
@@ -26,6 +27,11 @@ interface ProductInterface
      * @return float|null
      */
     public function getPrice(): ?float;
+
+    /**
+     * @return float|null
+     */
+    public function getOriginalPrice(): ?float;
 
     /**
      * @return string|null
@@ -54,6 +60,12 @@ interface ProductInterface
      * @return ProductInterface
      */
     public function setPrice(float $price): ProductInterface;
+
+    /**
+     * @param float $originalPrice
+     * @return ProductInterface
+     */
+    public function setOriginalPrice(float $originalPrice): ProductInterface;
 
     /**
      * @api

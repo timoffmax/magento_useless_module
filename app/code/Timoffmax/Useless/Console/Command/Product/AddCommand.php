@@ -36,9 +36,14 @@ class AddCommand extends Command implements CommandInterface
                 'Original product ID'
             )
             ->addArgument(
+                self::INPUT_KEY_ORIGINAL_PRICE,
+                InputArgument::REQUIRED,
+                'Original product price'
+            )
+            ->addArgument(
                 self::INPUT_KEY_PRICE,
                 InputArgument::REQUIRED,
-                'New product price'
+                'Converted product price'
             )
         ;
 
@@ -50,6 +55,7 @@ class AddCommand extends Command implements CommandInterface
         /** @var Product $product */
         $product = $this->productFactory->create();
         $product->setProductId($input->getArgument(self::INPUT_KEY_PRODUCT_ID));
+        $product->setOriginalPrice($input->getArgument(self::INPUT_KEY_ORIGINAL_PRICE));
         $product->setPrice($input->getArgument(self::INPUT_KEY_PRICE));
         $product->setIsObjectNew(true);
         $product->save();

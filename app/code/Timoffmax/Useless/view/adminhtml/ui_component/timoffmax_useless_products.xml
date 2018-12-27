@@ -88,10 +88,16 @@
                 <label translate="true">Product ID</label>
             </settings>
         </column>
+        <column name="original_price" sortOrder="25">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Original Price</label>
+            </settings>
+        </column>
         <column name="price" sortOrder="30">
             <settings>
                 <filter>textRange</filter>
-                <label translate="true">Price</label>
+                <label translate="true">Converted Price</label>
             </settings>
         </column>
         <column name="created_at"

@@ -44,10 +44,16 @@ class UpdateCommand extends Command implements CommandInterface
                 'Original order ID'
             ),
             new InputOption(
+                self::INPUT_KEY_ORIGINAL_TOTAL,
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Original order total'
+            ),
+            new InputOption(
                 self::INPUT_KEY_TOTAL,
                 null,
                 InputOption::VALUE_OPTIONAL,
-                'New order total'
+                'Converted order total'
             ),
         ];
 
@@ -63,6 +69,7 @@ class UpdateCommand extends Command implements CommandInterface
     {
         $id = $input->getOption(self::INPUT_KEY_ID);
         $orderId = $input->getOption(self::INPUT_KEY_ORDER_ID);
+        $originalTotal = $input->getOption(self::INPUT_KEY_ORIGINAL_TOTAL);
         $total = $input->getOption(self::INPUT_KEY_TOTAL);
 
         if (!empty($id) || !empty($orderId)) {
@@ -82,6 +89,10 @@ class UpdateCommand extends Command implements CommandInterface
             $order->setOrderId($orderId);
         }
 
+        if (isset($originalTotal)) {
+            $order->setOriginalTotal($originalTotal);
+        }
+
         if (isset($total)) {
             $order->setTotal($total);
         }
@@ -91,7 +102,8 @@ class UpdateCommand extends Command implements CommandInterface
         $output->writeln("--- Result ---");
         $output->writeln("ID: {$order->getId()}");
         $output->writeln("Order ID: {$order->getOrderId()}");
-        $output->writeln("Price: {$order->getTotal()}");
+        $output->writeln("Original total: {$order->getOriginalTotal()}");
+        $output->writeln("Converted total: {$order->getTotal()}");
 
         return Cli::RETURN_SUCCESS;
     }

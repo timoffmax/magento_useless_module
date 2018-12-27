@@ -74,7 +74,8 @@ class GetCommand extends Command implements CommandInterface
         $output->writeln("--- Result ---");
         $output->writeln("ID: {$product->getId()}");
         $output->writeln("Product ID: {$product->getProductId()}");
-        $output->writeln("Price: {$product->getPrice()}");
+        $output->writeln("Original price: {$product->getOriginalPrice()}");
+        $output->writeln("Converted price: {$product->getPrice()}");
 
         return Cli::RETURN_SUCCESS;
     }

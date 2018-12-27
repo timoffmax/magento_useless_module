@@ -44,10 +44,16 @@ class UpdateCommand extends Command implements CommandInterface
                 'Original product ID'
             ),
             new InputOption(
+                self::INPUT_KEY_ORIGINAL_PRICE,
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Original product price'
+            ),
+            new InputOption(
                 self::INPUT_KEY_PRICE,
                 null,
                 InputOption::VALUE_OPTIONAL,
-                'New product price'
+                'Converted product price'
             ),
         ];
 
@@ -63,6 +69,7 @@ class UpdateCommand extends Command implements CommandInterface
     {
         $id = $input->getOption(self::INPUT_KEY_ID);
         $productId = $input->getOption(self::INPUT_KEY_PRODUCT_ID);
+        $originalPrice = $input->getOption(self::INPUT_KEY_ORIGINAL_PRICE);
         $price = $input->getOption(self::INPUT_KEY_PRICE);
 
         if (!empty($id) || !empty($productId)) {
@@ -82,6 +89,10 @@ class UpdateCommand extends Command implements CommandInterface
             $product->setProductId($productId);
         }
 
+        if (isset($originalPrice)) {
+            $product->setOriginalPrice($originalPrice);
+        }
+
         if (isset($price)) {
             $product->setPrice($price);
         }
@@ -91,7 +102,8 @@ class UpdateCommand extends Command implements CommandInterface
         $output->writeln("--- Result ---");
         $output->writeln("ID: {$product->getId()}");
         $output->writeln("Product ID: {$product->getProductId()}");
-        $output->writeln("Price: {$product->getPrice()}");
+        $output->writeln("Original price: {$product->getOriginalPrice()}");
+        $output->writeln("Converted price: {$product->getPrice()}");
 
         return Cli::RETURN_SUCCESS;
     }

@@ -74,7 +74,8 @@ class GetCommand extends Command implements CommandInterface
         $output->writeln("--- Result ---");
         $output->writeln("ID: {$order->getId()}");
         $output->writeln("Order ID: {$order->getOrderId()}");
-        $output->writeln("Total: {$order->getTotal()}");
+        $output->writeln("Original total: {$order->getOriginalTotal()}");
+        $output->writeln("Converted total: {$order->getTotal()}");
 
         return Cli::RETURN_SUCCESS;
     }

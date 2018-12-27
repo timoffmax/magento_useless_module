@@ -5,6 +5,7 @@ namespace Timoffmax\Useless\Api\Data;
 interface OrderInterface
 {
     public const ORDER_ID = 'order_id';
+    public const ORIGINAL_TOTAL = 'original_total';
     public const TOTAL = 'total';
     public const CREATED_AT = 'created_at';
     public const UPDATED_AT = 'updated_at';
@@ -23,6 +24,11 @@ interface OrderInterface
      * @return float|null
      */
     public function getTotal(): ?float;
+
+    /**
+     * @return float|null
+     */
+    public function getOriginalTotal(): ?float;
 
     /**
      * @return string|null
@@ -51,6 +57,12 @@ interface OrderInterface
      * @return OrderInterface
      */
     public function setTotal(float $total): OrderInterface;
+
+    /**
+     * @param float $originalTotal
+     * @return OrderInterface
+     */
+    public function setOriginalTotal(float $originalTotal): OrderInterface;
 
     /**
      * @param string $createdAt

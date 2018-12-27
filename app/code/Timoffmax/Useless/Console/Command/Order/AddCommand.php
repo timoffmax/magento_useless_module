@@ -36,9 +36,14 @@ class AddCommand extends Command implements CommandInterface
                 'Original order ID'
             )
             ->addArgument(
+                self::INPUT_KEY_ORIGINAL_TOTAL,
+                InputArgument::REQUIRED,
+                'Original order total'
+            )
+            ->addArgument(
                 self::INPUT_KEY_TOTAL,
                 InputArgument::REQUIRED,
-                'New order total'
+                'Comverted order total'
             )
         ;
 
@@ -50,6 +55,7 @@ class AddCommand extends Command implements CommandInterface
         /** @var Order $order */
         $order = $this->orderFactory->create();
         $order->setOrderId($input->getArgument(self::INPUT_KEY_ORDER_ID));
+        $order->setOriginalTotal($input->getArgument(self::INPUT_KEY_ORIGINAL_TOTAL));
         $order->setTotal($input->getArgument(self::INPUT_KEY_TOTAL));
         $order->setIsObjectNew(true);
         $order->save();

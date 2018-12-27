@@ -47,6 +47,14 @@ class Order extends AbstractModel implements OrderInterface, IdentityInterface
     }
 
     /**
+     * @return float|null
+     */
+    public function getOriginalTotal(): ?float
+    {
+        return $this->getData(self::ORIGINAL_TOTAL);
+    }
+
+    /**
      * @return string|null
      */
     public function getCreatedAt(): ?string
@@ -87,6 +95,15 @@ class Order extends AbstractModel implements OrderInterface, IdentityInterface
     public function setTotal(float $total): OrderInterface
     {
         return $this->setData(self::TOTAL, $total);
+    }
+
+    /**
+     * @param float $originalTotal
+     * @return OrderInterface
+     */
+    public function setOriginalTotal(float $originalTotal): OrderInterface
+    {
+        return $this->setData(self::ORIGINAL_TOTAL, $originalTotal);
     }
 
     /**
