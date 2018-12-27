@@ -12,8 +12,8 @@
     <type name="Magento\Catalog\Model\Product">
         <plugin name="Timoffmax_Useless_ProductPlugin" type="Timoffmax\Useless\Plugin\ProductPlugin"/>
     </type>
-    <type name="Magento\Sales\Model\Order">
-        <plugin name="Timoffmax_Useless_OrderPlugin" type="Timoffmax\Useless\Plugin\OrderPlugin"/>
+    <type name="Magento\Sales\Api\OrderManagementInterface">
+        <plugin name="Timoffmax_Useless_OrderPlugin" type="Timoffmax\Useless\Plugin\OrderManagementInterfacePlugin"/>
     </type>
 
     <!--Commands-->
