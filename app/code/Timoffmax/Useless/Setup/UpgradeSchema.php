@@ -50,6 +50,36 @@ class UpgradeSchema implements UpgradeSchemaInterface
             ;
         }
 
+        if (version_compare($context->getVersion(), '1.0.2', '<')) {
+            $setup->getConnection()
+                ->addColumn(
+                    $setup->getTable('timoffmax_useless_product'),
+                    'original_price',
+                    [
+                        'type' => Table::TYPE_DECIMAL,
+                        'length' => '12,4',
+                        'nullable' => false,
+                        'comment' => 'Original product price',
+                        'after' => 'product_id',
+                    ]
+                )
+            ;
+
+            $setup->getConnection()
+                ->addColumn(
+                    $setup->getTable('timoffmax_useless_order'),
+                    'original_total',
+                    [
+                        'type' => Table::TYPE_DECIMAL,
+                        'length' => '12,4',
+                        'nullable' => false,
+                        'comment' => 'Original order total',
+                        'after' => 'order_id',
+                    ]
+                )
+            ;
+        }
+
         $setup->endSetup();
     }
 }
