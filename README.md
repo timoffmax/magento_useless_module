@@ -16,5 +16,5 @@ This test module doesn't have any real practical functions and has been created 
 **Module path:** `app/code/Timoffmax/Useless`.
 
 ### Requirements
-- PHP >=7.2 (were used type declarations for parameters and return values, was used NULL type);
+- PHP >=7.1 (were used type declarations for parameters and return values, was used NULL type);
 - Magento >= 2.3 (I haven't tested this module with previous Magento versions).
