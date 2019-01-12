@@ -46,17 +46,17 @@ class MassDelete extends Action implements HttpPostActionInterface
     public function execute()
     {
         $collection = $this->filter->getCollection($this->collectionFactory->create());
-        $productDeleted = 0;
+        $orderDeleted = 0;
 
-        /** @var \Timoffmax\Useless\Model\Order $product */
-        foreach ($collection->getItems() as $product) {
-            $product->delete();
-            $productDeleted++;
+        /** @var \Timoffmax\Useless\Model\Order $order */
+        foreach ($collection->getItems() as $order) {
+            $order->delete();
+            $orderDeleted++;
         }
 
-        if ($productDeleted) {
+        if ($orderDeleted) {
             $this->messageManager->addSuccessMessage(
-                __('A total of %1 record(s) have been deleted.', $productDeleted)
+                __('A total of %1 record(s) have been deleted.', $orderDeleted)
             );
         }
 
